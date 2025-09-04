@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - The Builder Project</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    body {
+      background: #0f172a;
+      font-family: 'Poppins', sans-serif;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .login-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 70px;
+    }
+    .login-container {
+      display: flex;
+      width: 95%;
+      max-width: 1000px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+    .login-image {
+      flex: 1;
+      background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWGUlnn_msttMdGIp_Rf24DXsFyv4tExTKEg&s') no-repeat center center/cover;
+      display: none;
+    }
+    .login-form {
+      flex: 1.2;
+      background: #1e293b;
+      padding: 50px;
+      overflow-y: auto;
+    }
+    .login-form h2 {
+      color: #facc15;
+      margin-bottom: 25px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .form-control {
+      background: #e3e4e9;
+      border: 1px solid #334155;
+      color: #f1f5f9;
+    }
+    .form-control:focus {
+      border: 1px solid #facc15;
+      box-shadow: none;
+    }
+    .btn-custom {
+      background: #facc15;
+      color: #000;
+      font-weight: bold;
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .btn-custom:hover {
+      background: #eab308;
+    }
+    .btn-google {
+      background: #fff;
+      color: #000;
+      font-weight: bold;
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+    .btn-google img {
+      width: 20px;
+      margin-right: 8px;
+    }
+    .extra-links {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .extra-links a {
+      color: #facc15;
+      text-decoration: none;
+    }
+    footer {
+      background: #0f172a;
+      padding: 15px;
+      text-align: center;
+      color: #f1f5f9;
+    }
+    .navbar {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #facc15 !important;
+    }
+    .nav-link {
+      color: #f1f5f9 !important;
+    }
+    .nav-link:hover {
+      color: #facc15 !important;
+    }
+    @media(min-width: 768px){
+      .login-image { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">🏗 The Builder Project</a>
+      <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon text-white"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Login Form -->
+  <section class="login-section">
+    <div class="login-container" data-aos="zoom-in">
+      <div class="login-image"></div>
+      <div class="login-form">
+        <h2>Welcome Back</h2>
+        <form>
+          <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Email or Username">
+          </div>
+          <div class="mb-3">
+            <input type="password" class="form-control" placeholder="Password">
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="remember">
+              <label class="form-check-label" for="remember">Remember Me</label>
+            </div>
+            <a href="#" class="text-warning">Forgot Password?</a>
+          </div>
+          <button type="submit" class="btn btn-custom">Login</button>
+        </form>
+        <button class="btn btn-google"><img src="https://img.icons8.com/color/48/000000/google-logo.png"/> Login with Google</button>
+        <div class="extra-links">
+          <p>Don't have an account? <a href="register.html">Register</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 The Builder Project | All Rights Reserved</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration: 1000, once: true });</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+*.log
+
+# Django migrations (optional: uncomment if you don't want to track them)
+# */migrations/*.py
+*/migrations/__pycache__/
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# SQLite database (if you don’t want to commit it)
+db.sqlite3
+
+# Media & static collected files
+/media/
+staticfiles/
+static/
+
+# pytest / coverage
+htmlcov/
+.coverage
+*.cover
+*.py,cover
+.cache
+nosetests.xml
+coverage.xml
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Node.js (अगर frontend भी है तो)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Backup files
+*.bak
+*.swp
+*.tmp

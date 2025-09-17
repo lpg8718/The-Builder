@@ -1,0 +1,331 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worker Dashboard - The Builder Project</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+  <style>
+    
+    :root {
+      --bg: #f8fafc;
+      --text: #1e293b;
+      --nav: #0f172a;
+      --accent: #facc15;
+      --card: #504b69;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0b1220;
+      --text: #e6eef8;
+      --nav: #071026;
+      --card: #2f3245;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* ✅ Full width fix */
+    .container {
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: var(--nav) !important;
+    }
+
+    .navbar-brand {
+      color: var(--accent) !important;
+      font-weight: 700;
+    }
+
+    .nav-link {
+      color: #f1f5f9 !important;
+    }
+
+    .nav-link:hover {
+      color: var(--accent) !important;
+    }
+
+    /* Header */
+    .dashboard-header {
+      background: url('https://img.freepik.com/free-photo/builders-working-construction-site_23-2149142784.jpg') center/cover no-repeat;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-radius: 8px;
+      margin: 18px 0;
+    }
+
+    .dashboard-header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      border-radius: 8px;
+    }
+
+    .dashboard-header h1 {
+      position: relative;
+      z-index: 2;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    /* Cards */
+    .card-accent {
+      background: var(--card);
+      color: #f1f5f9;
+      border-radius: 12px;
+      padding: 14px;
+      height: 100%;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #000;
+      border-radius: 20px;
+      border: none;
+      padding: 6px 14px;
+      font-weight: 600;
+    }
+
+    .btn-accent:hover {
+      background: #eab308;
+    }
+
+    /* Grid layout */
+    .grid-2-col {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      width: 100%;
+    }
+
+    @media(max-width:991px) {
+      .grid-2-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Kanban board */
+    .kanban {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .kanban-col {
+      background: #fff;
+      border-radius: 8px;
+      min-width: 250px;
+      padding: 12px;
+      flex: 1;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+    }
+
+    .kanban-col h6 {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .task {
+      background: var(--card);
+      color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: .9rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--nav);
+      color: #f1f5f9;
+      text-align: center;
+      padding: 12px;
+      margin-top: 30px;
+    }
+
+    .social-icons a {
+      color: var(--accent);
+      margin: 0 6px;
+      font-size: 18px;
+    }
+
+    .social-icons a:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">👷 Worker Dashboard</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">My Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Tasks</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Payments</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="dashboard-header">
+    <h1>Welcome Worker 🙌</h1>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container my-4">
+    <div class="grid-2-col">
+
+      <!-- Left side -->
+      <div>
+        <!-- Quick cards -->
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <div class="card-accent text-center">
+              <h5>My Projects</h5>
+              <p>5 Assigned</p>
+              <button class="btn-accent btn-sm">View</button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card-accent text-center">
+              <h5>Payments</h5>
+              <p>Last: ₹12,500</p>
+              <button class="btn-accent btn-sm">History</button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card-accent text-center">
+              <h5>Tasks</h5>
+              <p>8 Pending</p>
+              <button class="btn-accent btn-sm">Check</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task List -->
+        <div class="card p-3 mb-3">
+          <h4>Task List</h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Task Name</th>
+                <th>Status</th>
+                <th>Deadline</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Wall Painting</td>
+                <td><span class="badge bg-warning">Pending</span></td>
+                <td>20 Sep</td>
+              </tr>
+              <tr>
+                <td>Floor Tiling</td>
+                <td><span class="badge bg-info">In Progress</span></td>
+                <td>22 Sep</td>
+              </tr>
+              <tr>
+                <td>Electrical Fittings</td>
+                <td><span class="badge bg-success">Completed</span></td>
+                <td>15 Sep</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Payment History -->
+        <div class="card p-3">
+          <h4>Payment History</h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Project</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>12 Sep</td>
+                <td>Project A</td>
+                <td>₹12,500</td>
+              </tr>
+              <tr>
+                <td>05 Sep</td>
+                <td>Project B</td>
+                <td>₹10,000</td>
+              </tr>
+              <tr>
+                <td>28 Aug</td>
+                <td>Project C</td>
+                <td>₹8,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Right side -->
+      <div>
+        <div class="card p-3 mb-3">
+          <h4>Messages with Thekedar</h4>
+          <p><strong>Thekedar:</strong> Finish painting by tomorrow 🏗️</p>
+          <p><strong>You:</strong> Sure, almost done ✅</p>
+          <button class="btn-accent btn-sm">Open Chat</button>
+        </div>
+        <div class="card p-3">
+          <h4>Contact Thekedar</h4>
+          <form>
+            <input type="text" class="form-control mb-2" placeholder="Your Name" required>
+            <input type="email" class="form-control mb-2" placeholder="Your Email" required>
+            <textarea class="form-control mb-2" rows="3" placeholder="Message" required></textarea>
+            <button class="btn-accent w-100">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 The Builder Project | Worker Dashboard</p>
+    <div class="social-icons">
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="#"><i class="bi bi-twitter"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+  </script>
+</body>
+
+</html>

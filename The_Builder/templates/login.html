@@ -17,12 +17,13 @@
       <div class="login-image"></div>
       <div class="login-form">
         <h2>Welcome Back</h2>
-        <form>
+        <form method="post">
+          {% csrf_token %}
           <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Email or Username">
+            <input type="text" class="form-control" name="email" placeholder="Email or Username">
           </div>
           <div class="mb-3">
-            <input type="password" class="form-control" placeholder="Password">
+            <input type="password" class="form-control" name="password" placeholder="Password">
           </div>
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="form-check">

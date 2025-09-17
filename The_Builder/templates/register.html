@@ -13,40 +13,43 @@
     <div class="register-container" data-aos="fade-up">
       <div class="register-image"></div>
       <div class="register-form">
+        <span style="color: rgb(136, 226, 0); display: block; text-align: center; font-size: 1.5rem;">{% if message %}{{ message }}{% endif %}</span>
+        <span style="color: red;  display: block; text-align: center; font-size: 1.5rem;">{% if error %}{{ error }}{% endif %}</span>
         <h2>Create Your Account</h2>
-        <form>
+        <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
           <div class="row">
             <div class="col-md-6 mb-3">
-              <input type="text" class="form-control" placeholder="Full Name">
+              <input type="text" name="fullname" class="form-control" placeholder="Full Name">
             </div>
             <div class="col-md-6 mb-3">
-              <input type="text" class="form-control" placeholder="Username">
+              <input type="text" name="username" class="form-control" placeholder="Username">
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 mb-3">
-              <input type="email" class="form-control" placeholder="Email Address">
+              <input type="email" name="email" class="form-control" placeholder="Email Address">
             </div>
             <div class="col-md-6 mb-3">
-              <input type="tel" class="form-control" placeholder="Mobile Number">
+              <input type="tel" name="phone" class="form-control" placeholder="Mobile Number">
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 mb-3">
-              <input type="password" class="form-control" placeholder="Password">
+              <input type="password" name="password" class="form-control" placeholder="Password">
             </div>
             <div class="col-md-6 mb-3">
               <input type="password" class="form-control" placeholder="Confirm Password">
             </div>
           </div>
           <div class="mb-3">
-            <select class="form-select">
+            <select class="form-select" name="role">
               <option selected disabled>Select Your Role</option>
-              <option>Contractor</option>
-              <option>Thekedar</option>
-              <option>Buyer</option>
-              <option>Seller</option>
-              <option>Majdur</option>
+              <option value="contractor">Contractor</option>
+              <option value="thekedar">Thekedar</option>
+              <option value="worker">Worker</option>
+              <option value="buyer">Buyer</option>
+              <option value="seller">Seller</option>
             </select>
           </div>
           <div class="form-check mb-3">
@@ -59,7 +62,7 @@
         </form>
         <button class="btn btn-google"><img src="https://img.icons8.com/color/48/000000/google-logo.png"/> Sign up with Google</button>
         <div class="extra-links">
-          <p>Already have an account? <a href="login.html">Login</a></p>
+          <p>Already have an account? <a href="/login/">Login</a></p>
         </div>
       </div>
     </div>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Majdoor Dashboard - The Builder Project</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <style>
+    body {
+      background: #f8fafc;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .navbar {
+      background: #0f172a;
+    }
+
+    .navbar-brand {
+      color: #facc15 !important;
+      font-weight: 700;
+    }
+
+    .nav-link {
+      color: #f1f5f9 !important;
+    }
+
+    .dashboard-header {
+      background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)),
+        url("https://img.freepik.com/free-photo/construction-worker-building-site_23-2149151129.jpg") center/cover no-repeat;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .dashboard-header h1 {
+      color: #facc15;
+      font-weight: 800;
+    }
+
+    .card-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .attendance-btn {
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    footer {
+      background: #0f172a;
+      color: #f1f5f9;
+      padding: 12px;
+      text-align: center;
+      margin-top: 20px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">👷 Majdoor Dashboard</a>
+      <div class="ms-auto d-flex align-items-center">
+        <img src="https://i.pravatar.cc/100" width="40" height="40" style="border-radius:50%; border:2px solid #facc15;">
+      </div>
+    </div>
+  </nav>
+
+  <div class="container my-3">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <h1>Welcome, Ramesh (Electrician)</h1>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="row g-3 mb-3">
+      <div class="col-md-4">
+        <div class="card-box text-center">
+          <i class="bi bi-hammer fs-2 text-warning"></i>
+          <h5 class="mt-2">Today’s Task</h5>
+          <p id="todayTask">Install wiring at Site A</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-box text-center">
+          <i class="bi bi-calendar-check fs-2 text-success"></i>
+          <h5 class="mt-2">Attendance</h5>
+          <button class="btn btn-warning attendance-btn" id="markAttendance">Mark Present</button>
+          <p class="small mt-2 text-muted" id="attStatus">Not Marked</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-box text-center">
+          <i class="bi bi-cash-coin fs-2 text-primary"></i>
+          <h5 class="mt-2">Wages</h5>
+          <p>₹ 600 / day</p>
+          <small class="text-muted">Last Payment: 5 Sep 2025</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task List -->
+    <div class="card-box mb-3">
+      <h5>Assigned Tasks</h5>
+      <table class="table table-bordered table-sm mt-2">
+        <thead class="table-light">
+          <tr>
+            <th>Task</th>
+            <th>Site</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Install wiring</td>
+            <td>Site A</td>
+            <td><span class="badge bg-warning">Ongoing</span></td>
+          </tr>
+          <tr>
+            <td>Fix lights</td>
+            <td>Site B</td>
+            <td><span class="badge bg-success">Completed</span></td>
+          </tr>
+          <tr>
+            <td>Generator check</td>
+            <td>Site C</td>
+            <td><span class="badge bg-secondary">Pending</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Notifications -->
+    <div class="card-box mb-3">
+      <h5>Notifications</h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">⚠️ Safety meeting at 5 PM</li>
+        <li class="list-group-item">💰 Payment cycle on 10th Sep</li>
+        <li class="list-group-item">🔧 New tools available at warehouse</li>
+      </ul>
+    </div>
+
+    <!-- Profile -->
+    <div class="card-box">
+      <h5>My Profile</h5>
+      <p><strong>Name:</strong> Ramesh Kumar</p>
+      <p><strong>Skill:</strong> Electrician</p>
+      <p><strong>Phone:</strong> 98765 43210</p>
+      <p><strong>Address:</strong> Indore, MP</p>
+    </div>
+
+    <footer>© 2025 The Builder Project | Majdoor Dashboard</footer>
+  </div>
+
+  <script>
+    document.getElementById("markAttendance").addEventListener("click", () => {
+      document.getElementById("attStatus").textContent = "Marked Present ✅";
+      alert("Attendance Marked Successfully!");
+    });
+  </script>
+</body>
+</html>

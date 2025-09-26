@@ -10,9 +10,11 @@ class Users(models.Model):
     user_password = models.CharField(max_length=128)
     user_type = models.CharField(max_length=50)
     user_is_active = models.BooleanField(default=True)
+    user_profile = models.CharField(max_length=100, blank=True, null=True)
+    user_profile_pic = models.ImageField(upload_to="profiles/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    
 
     def __str__(self):
-        return self.username
+        return self.user_username

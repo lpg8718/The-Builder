@@ -1,0 +1,158 @@
+
+    :root {
+      --bg: #f8fafc;
+      --text: #1e293b;
+      --nav: #0f172a;
+      --accent: #facc15;
+      --card: #504b69;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0b1220;
+      --text: #e6eef8;
+      --nav: #071026;
+      --card: #2f3245;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* ✅ Full width fix */
+    .container {
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: var(--nav) !important;
+    }
+
+    .navbar-brand {
+      color: var(--accent) !important;
+      font-weight: 700;
+    }
+
+    .nav-link {
+      color: #f1f5f9 !important;
+    }
+
+    .nav-link:hover {
+      color: var(--accent) !important;
+    }
+
+    /* Header */
+    .dashboard-header {
+      background: url('https://img.freepik.com/free-photo/builders-working-construction-site_23-2149142784.jpg') center/cover no-repeat;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-radius: 8px;
+      margin: 18px 0;
+    }
+
+    .dashboard-header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      border-radius: 8px;
+    }
+
+    .dashboard-header h1 {
+      position: relative;
+      z-index: 2;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    /* Cards */
+    .card-accent {
+      background: var(--card);
+      color: #f1f5f9;
+      border-radius: 12px;
+      padding: 14px;
+      height: 100%;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #000;
+      border-radius: 20px;
+      border: none;
+      padding: 6px 14px;
+      font-weight: 600;
+    }
+
+    .btn-accent:hover {
+      background: #eab308;
+    }
+
+    /* Grid layout */
+    .grid-2-col {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      width: 100%;
+    }
+
+    @media(max-width:991px) {
+      .grid-2-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Kanban board */
+    .kanban {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .kanban-col {
+      background: #fff;
+      border-radius: 8px;
+      min-width: 250px;
+      padding: 12px;
+      flex: 1;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+    }
+
+    .kanban-col h6 {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .task {
+      background: var(--card);
+      color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: .9rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--nav);
+      color: #f1f5f9;
+      text-align: center;
+      padding: 12px;
+      margin-top: 30px;
+    }
+
+    .social-icons a {
+      color: var(--accent);
+      margin: 0 6px;
+      font-size: 18px;
+    }
+
+    .social-icons a:hover {
+      color: #fff;
+    }

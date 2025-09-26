@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 import requests
 
+from rest_framework.test import APIRequestFactory
+from api.views import RegisterView , LoginView # DRF API view
+
 def home(request):
     return render(request, 'base.html')
 
@@ -15,7 +18,7 @@ def register(request):
             user_type=request.POST.get("role")
             user_is_active=True
             print(user_fullname,user_username,user_email,user_phone,user_password,user_type,user_is_active)
-            url = f"http://{request.get_host()}/api/register/"
+            # url = f"http://{request.get_host()}/api/register/"
             payload = {
                 "user_full_name": user_fullname,
                 "user_username": user_username,
@@ -25,17 +28,18 @@ def register(request):
                 "user_type": user_type,
                 "user_is_active": user_is_active
             }
-            headers = {"Content-Type": "application/json"}
-
-            response = requests.post(url, json=payload, headers=headers)
+            # Instead of making HTTP call, use DRF view internally
+            factory = APIRequestFactory()
+            api_request = factory.post("/api/register/", payload, format="json")
+            response = RegisterView.as_view()(api_request)
 
             # Response check
             if response.status_code == 201:
-                print("✅ Success:", response.json())
-                return render(request, 'register.html', {"message": "User registered successfully!"})
+                print("✅ Success:", response.data)
+                return render(request, 'register.html', {"message": "User registered successfully✨💖!"})
             else:
-                print("❌ Error:", response.status_code, response.text)
-                return render(request, 'register.html', {"error": "Registration failed. Please try again."})
+                print("❌ Error:", response.status_code, response.data)
+                return render(request, 'register.html', {"error": "Email or Mobile number must be unique'😢. Please try again."})
     return render(request, 'register.html')
 
 def login(request):
@@ -43,12 +47,13 @@ def login(request):
         email=request.POST.get("email")
         password=request.POST.get("password")
         print(email,password)
-        url = f"http://{request.get_host()}/api/login/"
         payload = {"user_email": email, "user_password": password}
-        r = requests.post(url, json=payload, headers={"Content-Type": "application/json"})
+        factory = APIRequestFactory()
+        api_request = factory.post("/api/login/", payload, format="json")
+        response = LoginView.as_view()(api_request)
 
         try:
-            data = r.json()
+            data = response.data
             print("Response JSON:", data)  # Debugging
             if data.get("status"):
                 user_type = data["data"]["user_type"]

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,295 +9,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f8fafc;
-            color: #1e293b;
-        }
-
-        /* Navbar */
-        .navbar {
-            background: #0f172a;
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-            color: #facc15 !important;
-        }
-
-        .nav-link {
-            color: #f1f5f9 !important;
-        }
-
-        .nav-link:hover {
-            color: #facc15 !important;
-        }
-
-        /* Profile Dropdown */
-        .profile-dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .profile-pic {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #facc15;
-        }
-
-        .dropdown-menu-custom {
-            position: absolute;
-            right: 0;
-            top: 50px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            display: none;
-            flex-direction: column;
-            min-width: 160px;
-            z-index: 10;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .dropdown-menu-custom a {
-            padding: 10px 15px;
-            color: #1e293b;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-
-        .dropdown-menu-custom a:hover {
-            background: #facc15;
-            color: #000;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Header */
-        .dashboard-header {
-            background: url('https://img.freepik.com/free-photo/construction-site-city_23-2148103581.jpg') no-repeat center/cover;
-            height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            color: #fff;
-            text-align: center;
-        }
-
-        .dashboard-header::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-        }
-
-        .dashboard-header h1 {
-            position: relative;
-            z-index: 1;
-            color: #facc15;
-            font-weight: 700;
-            animation: typing 4s steps(22) 1 forwards;
-            /* 1 बार चलेगा और रुक जाएगा */
-            white-space: nowrap;
-            overflow: hidden;
-            /* border-right: 3px solid #facc15; */
-            width: 0ch;
-        }
-
-
-
-        @keyframes typing {
-            0% {
-                width: 0ch;
-            }
-
-            100% {
-                width: 22ch;
-            }
-        }
-
-        /* Dashboard Cards */
-        .dashboard-card {
-            background: #504b69;
-            color: #f1f5f9;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            transition: 0.3s;
-        }
-
-        .dashboard-card:hover {
-            transform: translateY(-8px);
-        }
-
-        .dashboard-card h4 {
-            color: #facc15;
-            font-weight: 600;
-        }
-
-        .btn-yellow {
-            background: #facc15;
-            border: none;
-            color: #000;
-            font-weight: 500;
-            border-radius: 25px;
-            padding: 8px 20px;
-        }
-
-        .btn-yellow:hover {
-            background: #eab308;
-        }
-
-        /* Properties Slider */
-        .swiper {
-            padding: 40px 0;
-        }
-
-        .swiper-slide {
-            background: #584d72;
-            color: #f1f5f9;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            transition: 0.3s;
-            height: auto;
-        }
-
-        .swiper-slide img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-
-        .swiper-slide .card-body {
-            padding: 15px;
-        }
-
-        .swiper-slide h5 {
-            color: #facc15;
-            font-weight: 600;
-        }
-
-        .contractorSwiper .swiper-slide {
-            background: #43426e;
-            color: #f1f5f9 !important;
-            border-radius: 15px;
-            padding: 20px 10px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-
-        .contractorSwiper .swiper-slide:hover {
-            transform: translateY(-5px);
-        }
-
-        .contractorSwiper img {
-            border: 3px solid #facc15;
-            padding: 3px;
-        }
-        .contractorSwiper p{
-            color: #f8fafc !important;
-        }
-        .contractorSwiper h6{
-            font-weight: bold;
-        }
-
-
-        /* Contact Form */
-        .contact-section {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            padding: 50px 20px;
-            border-radius: 20px;
-            color: #fff;
-            margin-top: 50px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact-section::before {
-            content: "";
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(80, 87, 151, 0.3), transparent 70%);
-            top: -50%;
-            left: -50%;
-            animation: rotateBG 15s linear infinite;
-        }
-
-        @keyframes rotateBG {
-            0% {
-                transform: rotate(0);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            border-radius: 10px;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            margin-bottom: 15px;
-        }
-
-        .contact-form button {
-            background: #facc15;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-weight: bold;
-            color: #000;
-            transition: transform 0.3s;
-        }
-
-        .contact-form button:hover {
-            transform: scale(1.05);
-            background: #eab308;
-        }
-
-        /* Footer */
-        footer {
-            background: #0f172a;
-            color: #f1f5f9;
-            text-align: center;
-            padding: 15px;
-            margin-top: 40px;
-        }
-
-        .social-icons a {
-            color: #facc15;
-            margin: 0 10px;
-            font-size: 20px;
-            transition: transform 0.3s;
-        }
-
-        .social-icons a:hover {
-            transform: scale(1.3);
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/cont_home.css' %}" />
 </head>
 
 <body>
-
+    {% block navbar %}
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
@@ -321,12 +38,20 @@
             </div>
         </div>
     </nav>
+    {% endblock %}
 
+    {% block dashboard %}
     <!-- Dashboard Header -->
     <section class="dashboard-header">
         <h1>Welcome Contractor 👷</h1>
     </section>
-
+    {% endblock %}
+ 
+    {% block main %}
+    <!-- Main Content -->
+     {% endblock %}
+ 
+    {% block dashboard-card %}
     <!-- Dashboard Cards -->
     <div class="container my-5">
         <div class="row g-4">
@@ -356,7 +81,9 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 
+    {% block slider %}
     <!-- Properties Slider -->
     <div class="container">
         <h2 class="text-center mb-4" data-aos="fade-down">My Properties 🏡</h2>
@@ -399,6 +126,9 @@
             <div class="swiper-button-prev"></div>
         </div>
     </div>
+    {% endblock %}
+
+    {% block contractors-slider %}
 
     <!-- Contractors Slider -->
     <div class="container mt-5">
@@ -453,8 +183,9 @@
             <div class="swiper-pagination"></div>
         </div>
     </div>
+    {% endblock %}
 
-
+    {% block contact %}
     <!-- Contact Form -->
     <div class="container contact-section mt-5" data-aos="zoom-in">
         <h2 class="text-center mb-4">Have a Query? 🤔</h2>
@@ -466,7 +197,9 @@
             <div class="text-center"><button type="submit">Send Message</button></div>
         </form>
     </div>
-
+    {% endblock %}
+    
+    {% block footer %}
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 The Builder Project | Contractor Dashboard</p>
@@ -476,49 +209,14 @@
             <a href="#"><i class="bi bi-instagram"></i></a>
         </div>
     </footer>
+    {% endblock %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script src="{% static 'js/cont_home.js' %}"></script>
 
-    <script>
-        AOS.init({ duration: 1000, once: true });
-
-        var swiper = new Swiper(".mySwiper", {
-            slidesPerView: 3, spaceBetween: 30, loop: true,
-            autoplay: { delay: 2500, disableOnInteraction: false },
-            pagination: { el: ".swiper-pagination", clickable: true },
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-            breakpoints: { 0: { slidesPerView: 1 }, 768: { slidesPerView: 2 }, 992: { slidesPerView: 3 } }
-        });
-
-        // Profile dropdown toggle
-        const profilePic = document.getElementById("profilePic");
-        const dropdownMenu = document.getElementById("dropdownMenu");
-        profilePic.addEventListener("click", () => {
-            dropdownMenu.style.display = dropdownMenu.style.display === "flex" ? "none" : "flex";
-        });
-        window.addEventListener("click", (e) => {
-            if (!profilePic.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                dropdownMenu.style.display = "none";
-            }
-        });
-
-        var contractorSwiper = new Swiper(".contractorSwiper", {
-            slidesPerView: 5,
-            spaceBetween: 20,
-            loop: true,
-            autoplay: { delay: 2000, disableOnInteraction: false },
-            pagination: { el: ".contractorSwiper .swiper-pagination", clickable: true },
-            breakpoints: {
-                0: { slidesPerView: 2 },
-                576: { slidesPerView: 3 },
-                992: { slidesPerView: 5 }
-            }
-        });
-
-    </script>
 </body>
 
 </html>

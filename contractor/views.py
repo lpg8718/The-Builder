@@ -6,3 +6,6 @@ def contractor_home(request):
 
 def contractore_view_profile(request):
     return render(request, 'contractor_view_profile.html')
+
+def contractore_edit_profile(request):
+    return render(request, 'contractor_edit_profile.html')

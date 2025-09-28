@@ -167,10 +167,11 @@
       <a class="navbar-brand" href="#">🏗 The Builder Project</a>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="/contractor/">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contractor/">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Workers</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+          <li class="nav-item"><a class="nav-link" href="/">Logout</a></li>
         </ul>
       </div>
     </div>
@@ -179,9 +180,9 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content" data-aos="zoom-in">
-      <img src="https://i.pravatar.cc/200?img=12" alt="Contractor" class="profile-pic">
-      <h1>Rahul Sharma</h1>
-      <p>👷 Civil Contractor | 🏠 Indore | ⭐ 4.8/5 Rating</p>
+      <img src="/media/profile_images/{{ obj.user_profile_pic }}" alt="Contractor" class="profile-pic">
+      <h1>{{ obj.user_full_name }}</h1>
+      <p>👷 {{ obj.user_profile }} | 🏠 {{ obj.user_city }} | ⭐ 4.8/5 Rating</p>
       <button class="btn-yellow"><a href="/contractor/profile_edit/" style="text-decoration: none;">Edit Profile</a></button>
     </div>
   </section>

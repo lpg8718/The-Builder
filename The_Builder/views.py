@@ -6,7 +6,7 @@ from The_Builder.models import Contact_lead
 from api.views import RegisterView , LoginView # DRF API view
 
 def home(request):
-    
+
     return render(request, 'base.html')
 
 
@@ -57,6 +57,7 @@ def login(request):
         try:
             data = response.data
             print("Response JSON:", data)  # Debugging
+            
             if data.get("status"):
                 user_type = data["data"]["user_type"]
                 print(user_type)

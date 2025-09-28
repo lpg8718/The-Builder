@@ -17,13 +17,13 @@ class Users(models.Model):
     user_type = models.CharField(max_length=50)
     user_is_active = models.BooleanField(default=True)
     user_profile = models.CharField(max_length=100, blank=True, null=True)
-    user_profile_pic = models.ImageField(upload_to="profiles/", blank=True, null=True)
+    user_profile_pic = models.ImageField(upload_to="profile_images/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
 
     def __str__(self):
-        return self.user_username
+        return f"{self.user_id}"
 
 class Contact_lead(models.Model):
     lead_id = models.AutoField(primary_key=True)

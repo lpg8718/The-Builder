@@ -9,6 +9,29 @@
 {% block register %}
 {% endblock %}
 
+
+{% block Navbar %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">🏗 The Builder Project</a>
+    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon text-white"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="/#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+        <li class="nav-item"><a href="/login/"><button class="btn btn-login">Login</button></a></li>
+        <li class="nav-item"><a href="/register/"><button class="btn btn-register">Register</button></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
 {% block login %}
 <link href="{% static 'css/login.css' %}" rel="stylesheet">
   <!-- Login Form -->

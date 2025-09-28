@@ -146,11 +146,15 @@
     <div class="row g-4">
       <div class="col-md-6" data-aos="fade-right">
         <div class="contact-form">
-          <form>
-            <div class="mb-3"><input type="text" class="form-control" placeholder="Your Name"></div>
-            <div class="mb-3"><input type="email" class="form-control" placeholder="Your Email"></div>
-            <div class="mb-3"><textarea rows="5" class="form-control" placeholder="Message"></textarea></div>
-            <button class="btn btn-register">Send Message</button>
+          <form method="post" action="{% url 'contact' %}">
+            {% csrf_token %}
+            <span class="text-success">{{ message }}</span>
+            <span class="text-danger">{{ error }}</span>
+            <div class="mb-3"><input type="text" class="form-control" placeholder="Your Name" name="name" required></div>
+            <div class="mb-3"><input type="email" class="form-control" placeholder="Your Email" name="email" required></div>
+            <div class="mb-3"><input type="text" class="form-control" placeholder="Your Number" name="phone" required></div>
+            <div class="mb-3"><textarea rows="5" class="form-control" placeholder="Message" name="message" required></textarea></div>
+            <div class="d-grid"><button type="submit" class="btn btn-register">Send Message</button></div>
           </form>
         </div>
       </div>

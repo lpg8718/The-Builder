@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect
 import requests
 
 from rest_framework.test import APIRequestFactory
+from The_Builder.models import Contact_lead
 from api.views import RegisterView , LoginView # DRF API view
 
 def home(request):
+    
     return render(request, 'base.html')
 
 
@@ -79,3 +81,25 @@ def login(request):
             print("Non-JSON response (status_code={}):".format(r.status_code))
             print(r.text[:1000])  # Debugging
     return render(request, 'login.html')
+
+def contact(request):
+    if request.method=="POST":
+        lead_name=request.POST.get("name","not provided")
+        lead_email=request.POST.get("email","not provided")
+        lead_phone=request.POST.get("phone","not provided")
+        lead_message=request.POST.get("message","not provided")
+        print(lead_name,lead_email,lead_phone,lead_message)
+        try:
+                
+            obj = Contact_lead(
+                lead_name=lead_name,
+                lead_email=lead_email,
+                lead_phone=lead_phone,
+                lead_message=lead_message
+            )
+            obj.save()
+            return render(request, 'base.html', {"message": "Thank you for contacting us! We will get back to you soon.✨💖"})
+        except Exception as e:
+            print("Error saving contact lead:", e)
+            return render(request, 'base.html', {"error": "There was an error submitting your message. Please try again."})
+    return render(request, 'base.html')

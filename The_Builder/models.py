@@ -18,3 +18,14 @@ class Users(models.Model):
 
     def __str__(self):
         return self.user_username
+
+class Contact_lead(models.Model):
+    lead_id = models.AutoField(primary_key=True)
+    lead_name = models.CharField(max_length=100)
+    lead_email = models.EmailField()
+    lead_phone = models.CharField(max_length=15)
+    lead_message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.lead_name

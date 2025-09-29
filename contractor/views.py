@@ -33,7 +33,7 @@ def contractore_edit_profile(request):
             user_zip_code = request.POST.get("zip_code","")
             user_country = request.POST.get("country","")
             user_about_me = request.POST.get("about_me","")
-            print(user_fullname, user_address, user_city, user_profile_image, user_state, user_zip_code, user_country, user_about_me)
+            print(user_fullname, user_address, user_city, user_profile_image,user_profile, user_state, user_zip_code, user_country, user_about_me)
             print("Profile id:", token_data["user_id"])
             ext=user_profile_image.name.split('.')[-1]
 

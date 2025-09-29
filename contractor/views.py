@@ -48,6 +48,9 @@ def contractore_edit_profile(request):
                 with open(file_path,"wb+") as f:
                     for chunk in user_profile_image.chunks():
                         f.write(chunk)
+            else:
+                file_name= obj.user_profile_pic
+                
                 
 
             Users.objects.filter(user_id=token_data["user_id"]).update(

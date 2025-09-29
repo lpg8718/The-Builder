@@ -64,6 +64,7 @@ def contractore_edit_profile(request):
             return redirect('/contractor/profile/')
         except Exception as e:
             print("Error updating profile:", e)
+            return render(request, 'contractor_edit_profile.html',{"obj":obj})
         # Here, you would typically save the updated profile information to the database.
     
     return render(request, 'contractor_edit_profile.html',{"obj":obj})

@@ -78,7 +78,7 @@ def login(request):
             else:
                 print("❌ Login failed:", data.get("message"))
 
-        except ValueError:
+        except ValueError as r:
             print("Non-JSON response (status_code={}):".format(r.status_code))
             print(r.text[:1000])  # Debugging
     return render(request, 'login.html')

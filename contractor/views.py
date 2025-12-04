@@ -71,3 +71,18 @@ def contractore_edit_profile(request):
         # Here, you would typically save the updated profile information to the database.
     
     return render(request, 'contractor_edit_profile.html',{"obj":obj})
+
+def project_page1(request):
+    token_data = request.session.get("data")
+    obj = Users.objects.get(user_id=token_data["user_id"])
+    return render(request, 'project_page1.html',{"obj":obj})
+
+def add_project(request):
+    token_data = request.session.get("data")
+    obj = Users.objects.get(user_id=token_data["user_id"])
+    return render(request, 'add_projects.html',{"obj":obj})
+
+def view_project(request,pid):
+    token_data = request.session.get("data")
+    obj = Users.objects.get(user_id=token_data["user_id"])
+    return render(request, 'view_project.html',{"obj":obj,"pid":pid})

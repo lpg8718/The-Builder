@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Project Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden; /* body scroll removed */
+        }
+
+        /* ================================
+           NAVBAR - FIXED
+        ================================= */
+        .navbar {
+            background: #072f57;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10000;
+        }
+
+        .navbar .nav-link,
+        .navbar-brand {
+            color: white !important;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .navbar-brand {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .profile-pic {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            object-fit: cover;
+        }
+
+        .dropdown-menu-custom {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            min-width: 150px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+
+        #profilePic:hover + #dropdownMenu,
+        .dropdown-menu-custom:hover {
+            display: block;
+        }
+
+        /* ================================
+           LAYOUT (LEFT + RIGHT)
+        ================================= */
+
+        .layout-wrapper {
+            display: flex;
+            margin-top: 70px;
+            height: calc(100vh - 70px - 60px); /* header + footer height */
+        }
+
+        /* LEFT CONTENT SCROLLABLE */
+        .content-area {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        /* RIGHT SIDEBAR SCROLLABLE */
+        .right-sidebar {
+            width: 350px;
+            background: #fafafa;
+            border-left: 3px solid #e5e5e5;
+            padding: 25px;
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        .project-card {
+            border-radius: 12px;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        /* ================================
+           FOOTER - FIXED
+        ================================= */
+        footer {
+            background: black;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">🏗 Contractor Dashboard</a>
+
+            <button class="navbar-toggler bg-light" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/contractor">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Workers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+
+                    <li class="nav-item">
+                        <div class="profile-dropdown">
+                            <img src="/media/profile_images/{{ obj.user_profile_pic }}" 
+                                 class="profile-pic" id="profilePic">
+
+                            <div class="dropdown-menu-custom" id="dropdownMenu">
+                                <a href="/contractor/profile/">My Profile</a>
+                                <a href="#">Settings</a>
+                                <a href="/">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN LAYOUT (SCROLLABLE LEFT + RIGHT) -->
+    <div class="layout-wrapper">
+
+        <!-- LEFT CONTENT SCROLL -->
+        <div class="content-area">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h3>Your Active Projects</h3>
+                <a href="add_project.html" class="btn btn-primary">➕ Add New Project</a>
+            </div>
+
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 Apartment Construction</h5>
+                        <p><b>Budget:</b> ₹50,00,000</p>
+                        <p><b>Location:</b> Indore</p>
+                        <p><b>Deadline:</b> 12 Months</p>
+                        <span class="badge bg-info">Open for Applications</span>
+                        <br><br>
+                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+
+        <!-- RIGHT SIDEBAR SCROLL -->
+        <div class="right-sidebar">
+            <h5>🧑‍🔧 Latest Contractor Applications</h5>
+            <hr>
+
+            <!--  Your repeated cards here -->
+        
+            <div class="p-3 mb-3 bg-white shadow-sm rounded">
+                <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
+                <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
+            </div>
+            <div class="p-3 mb-3 bg-white shadow-sm rounded">
+                <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
+                <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
+            </div>
+            <div class="p-3 mb-3 bg-white shadow-sm rounded">
+                <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
+                <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
+            </div>
+            <div class="p-3 mb-3 bg-white shadow-sm rounded">
+                <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
+                <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
+            </div>
+            <div class="p-3 mb-3 bg-white shadow-sm rounded">
+                <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
+                <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
+            </div>
+            <div class="p-3 mb-3 bg-white shadow-sm rounded">
+                <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
+                <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
+            </div>
+            <div class="p-3 mb-3 bg-white shadow-sm rounded">
+                <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
+                <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
+            </div>
+            <div class="p-3 mb-3 bg-white shadow-sm rounded">
+                <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
+                <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
+            </div>
+            <div class="p-3 mb-3 bg-white shadow-sm rounded">
+                <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
+                <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
+            </div>
+            <div class="p-3 mb-3 bg-white shadow-sm rounded">
+                <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
+                <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
+            </div>
+            <div class="p-3 mb-3 bg-white shadow-sm rounded">
+                <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
+                <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
+            </div>
+            <div class="p-3 mb-3 bg-white shadow-sm rounded">
+                <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
+                <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2025 The Builder Project | Contractor Dashboard
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Project Applicants — Contractor Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background: #f6f8fa; font-family: Inter, Poppins, sans-serif; }
+    .page-header { background:#0b1b33; color:#fff; padding:18px 24px; }
+    .card-applicant { border-radius:12px; box-shadow:0 6px 18px rgba(12,28,47,0.08); }
+    .status-badge { font-size:13px; padding:6px 10px; border-radius:999px; }
+    .action-btn { min-width:110px; }
+    .sidebar { position:fixed; right:16px; top:88px; width:300px; }
+    @media (max-width:991px){ .sidebar{ position:static; width:100%; margin-top:16px } }
+  </style>
+</head>
+<body>
+
+  <header class="page-header d-flex justify-content-between align-items-center">
+    <div>
+      <h4 class="mb-0">Applicants for: <strong>Road Repair — Sector 12</strong></h4>
+      <small class="text-muted">Project ID: PRJ-2025-089</small>
+    </div>
+    <div class="d-flex gap-2 align-items-center">
+      <button class="btn btn-outline-light btn-sm" id="exportCsvBtn"><i class="fa fa-file-csv"></i> Export CSV</button>
+      <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"></i> Back to Projects</a>
+    </div>
+  </header>
+
+  <main class="container my-4">
+    <div class="row">
+      <div class="col-lg-8">
+
+        <!-- Filters bar -->
+        <div class="d-flex gap-2 mb-3">
+          <input id="searchInput" class="form-control" placeholder="Search applicants by name, skill, or bid" />
+          <select id="statusFilter" class="form-select" style="max-width:180px;">
+            <option value="all">All statuses</option>
+            <option value="pending">Pending</option>
+            <option value="reviewed">Reviewed</option>
+            <option value="accepted">Accepted</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+
+        <!-- Applicants list -->
+        <div id="applicantsList" class="row g-3">
+          <!-- Applicant Card (template) -->
+        </div>
+
+        <!-- Pagination -->
+        <nav class="mt-4" aria-label="applicants pagination">
+          <ul class="pagination" id="pagination"></ul>
+        </nav>
+
+      </div>
+
+      <!-- Right sidebar: Quick actions & notifications -->
+      <aside class="col-lg-4">
+        <div class="card p-3 mb-3 card-applicant">
+          <h6 class="mb-2">Quick Actions</h6>
+          <p class="small text-muted">Manage applicants faster — accept one, message them, or download their documents.</p>
+          <button id="acceptAllBtn" class="btn btn-success btn-sm w-100 mb-2">Accept Best Bid</button>
+          <button id="messageAllBtn" class="btn btn-outline-primary btn-sm w-100">Message All</button>
+        </div>
+
+        <div class="card p-3 card-applicant">
+          <h6 class="mb-2">Notifications</h6>
+          <ul class="list-unstyled small mb-0" id="notifications">
+            <li>Ravi applied 2 hours ago</li>
+            <li>New document from Aarav uploaded</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Applicant Details Modal -->
+  <div class="modal fade" id="applicantModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Applicant Details</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="modalContent"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button id="modalAcceptBtn" class="btn btn-success">Accept</button>
+          <button id="modalRejectBtn" class="btn btn-danger">Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Sample applicants data (replace with server data)
+    const applicants = [
+      { id:1, name:'Vikas Sharma', experience:5, bid:320000, status:'pending', phone:'+919800000001', about:'I will complete in 45 days. Team of 12. Includes materials for roads.' },
+      { id:2, name:'Raghav Contractor', experience:8, bid:300000, status:'reviewed', phone:'+919800000002', about:'Experienced in municipal road works. 6 months warranty.' },
+      { id:3, name:'Aarav Enterprises', experience:2, bid:280000, status:'pending', phone:'+919800000003', about:'Small team, competitive price, flexible schedule.' },
+      { id:4, name:'Neha Builders', experience:10, bid:350000, status:'pending', phone:'+919800000004', about:'Large company, faster completion, quality guarantee.' }
+    ];
+
+    const pageSize = 3;
+    let currentPage = 1;
+
+    function renderApplicants() {
+      const container = document.getElementById('applicantsList');
+      container.innerHTML = '';
+
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const status = document.getElementById('statusFilter').value;
+
+      const filtered = applicants.filter(a => {
+        const matchSearch = [a.name, a.about, String(a.bid)].join(' ').toLowerCase().includes(search);
+        const matchStatus = (status === 'all') || (a.status === status);
+        return matchSearch && matchStatus;
+      });
+
+      const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+      currentPage = Math.min(currentPage, totalPages);
+      const start = (currentPage - 1) * pageSize;
+      const pageItems = filtered.slice(start, start + pageSize);
+
+      for (const app of pageItems) {
+        const col = document.createElement('div'); col.className = 'col-12';
+        col.innerHTML = `
+          <div class="card p-3 card-applicant">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h5 class="mb-1">${app.name}</h5>
+                <div class="text-muted small">Experience: ${app.experience} years • Bid: ₹${app.bid.toLocaleString()}</div>
+                <div class="mt-2">${app.about}</div>
+              </div>
+              <div class="text-end">
+                <div class="mb-2"><span class="badge status-badge ${statusClass(app.status)}">${capitalize(app.status)}</span></div>
+                <div class="d-flex flex-column gap-2">
+                  <button class="btn btn-outline-primary btn-sm action-btn" onclick="viewApplicant(${app.id})"><i class='fa fa-eye'></i> View</button>
+                  <div class="d-flex gap-2 mt-1">
+                    <button class="btn btn-success btn-sm" onclick="acceptApplicant(${app.id})">Accept</button>
+                    <button class="btn btn-danger btn-sm" onclick="rejectApplicant(${app.id})">Reject</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>`;
+        container.appendChild(col);
+      }
+
+      renderPagination(filtered.length);
+    }
+
+    function statusClass(s){
+      return s === 'accepted' ? 'bg-success text-white' : s === 'rejected' ? 'bg-danger text-white' : s === 'reviewed' ? 'bg-info text-white' : 'bg-warning text-dark';
+    }
+    function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    function viewApplicant(id){
+      const app = applicants.find(a => a.id === id);
+      const modalContent = document.getElementById('modalContent');
+      modalContent.innerHTML = `
+        <div class="row">
+          <div class="col-md-8">
+            <h5>${app.name}</h5>
+            <p><strong>Experience:</strong> ${app.experience} years</p>
+            <p><strong>Bid:</strong> ₹${app.bid.toLocaleString()}</p>
+            <p><strong>Phone:</strong> <a href='tel:${app.phone}'>${app.phone}</a></p>
+            <p><strong>About:</strong> ${app.about}</p>
+          </div>
+          <div class="col-md-4 text-center">
+            <img src="https://via.placeholder.com/180" class="img-fluid rounded mb-2" />
+            <div class="d-grid gap-2">
+              <a class="btn btn-outline-primary" href="mailto:contractor@example.com?subject=Regarding%20your%20application">Message</a>
+              <a class="btn btn-outline-secondary" href="#">Download Documents</a>
+            </div>
+          </div>
+        </div>`;
+
+      const modal = new bootstrap.Modal(document.getElementById('applicantModal'));
+      modal.show();
+
+      document.getElementById('modalAcceptBtn').onclick = () => { acceptApplicant(id); modal.hide(); };
+      document.getElementById('modalRejectBtn').onclick = () => { rejectApplicant(id); modal.hide(); };
+    }
+
+    function acceptApplicant(id){
+      const app = applicants.find(a => a.id === id); if(!app) return;
+      app.status = 'accepted';
+      toast(`${app.name} accepted`);
+      renderApplicants();
+    }
+    function rejectApplicant(id){
+      const app = applicants.find(a => a.id === id); if(!app) return;
+      app.status = 'rejected';
+      toast(`${app.name} rejected`);
+      renderApplicants();
+    }
+
+    function toast(msg){
+      const el = document.createElement('div');
+      el.className = 'toast align-items-center text-bg-dark border-0';
+      el.style.position='fixed'; el.style.right='20px'; el.style.bottom='20px';
+      el.innerHTML = `<div class='d-flex'><div class='toast-body'>${msg}</div><button class='btn-close btn-close-white me-2 m-auto' data-bs-dismiss='toast'></button></div>`;
+      document.body.appendChild(el);
+      const bs = new bootstrap.Toast(el); bs.show();
+      el.addEventListener('hidden.bs.toast', ()=> el.remove());
+    }
+
+    // Pagination
+    function renderPagination(totalItems){
+      const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+      const ul = document.getElementById('pagination'); ul.innerHTML = '';
+      for(let p=1;p<=totalPages;p++){
+        const li = document.createElement('li'); li.className = 'page-item' + (p===currentPage? ' active':'');
+        li.innerHTML = `<a class='page-link' href='#' onclick='gotoPage(${p});return false;'>${p}</a>`;
+        ul.appendChild(li);
+      }
+    }
+    function gotoPage(p){ currentPage = p; renderApplicants(); }
+
+    // Filters and events
+    document.getElementById('searchInput').addEventListener('input', ()=>{ currentPage=1; renderApplicants(); });
+    document.getElementById('statusFilter').addEventListener('change', ()=>{ currentPage=1; renderApplicants(); });
+    document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
+
+    document.getElementById('acceptAllBtn').addEventListener('click', ()=>{
+      // simple heuristic: accept lowest bid
+      let best = applicants.filter(a=> a.status!=='accepted').sort((x,y)=> x.bid - y.bid)[0];
+      if(best) acceptApplicant(best.id);
+    });
+
+    function exportCsv(){
+      const rows = [['id','name','experience','bid','status','phone','about']];
+      for(const a of applicants) rows.push([a.id,a.name,a.experience,a.bid,a.status,a.phone,a.about]);
+      const csv = rows.map(r=> r.map(c=> '"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'applicants.csv'; a.click(); URL.revokeObjectURL(url);
+    }
+
+    // Init
+    renderApplicants();
+  </script>
+</body>
+</html>

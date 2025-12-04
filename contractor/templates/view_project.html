@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background: #072f57;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10000;
+        }
+
+        .navbar .nav-link,
+        .navbar-brand {
+            color: white !important;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .navbar-brand {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .layout-wrapper {
+            margin-top: 80px;
+            margin-bottom: 100px;
+        }
+
+        footer {
+            background: black;
+            color: white;
+            text-align: center;
+            padding: 16px;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .detail-card {
+            background: #fff;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-left: 4px solid #072f57;
+            padding-left: 10px;
+            color: #072f57;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #072f57;
+            margin-top: 10px;
+        }
+
+        .info-value {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">🏗 Contractor Dashboard</a>
+
+            <button class="navbar-toggler bg-light" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/contractor">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contractor/project_page1">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Workers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+
+                    <li class="nav-item">
+                        <img src="/media/profile_images/{{ obj.user_profile_pic }}" class="rounded-circle" width="40" height="40">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN PAGE CONTENT -->
+    <div class="container layout-wrapper">
+        <div class="detail-card">
+
+            <h3 class="text-center mb-4">📌 Project Details</h3>
+
+            <!-- BASIC DETAILS -->
+            <div class="section-title">Basic Details</div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-label">Project Title</div>
+                    <div class="info-value">Residential Building Construction</div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="info-label">Category</div>
+                    <div class="info-value">Building Construction</div>
+                </div>
+            </div>
+
+            <!-- FINANCIAL DETAILS -->
+            <div class="section-title">Financial Details</div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="info-label">Budget</div>
+                    <div class="info-value">₹ 45 Lakhs</div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="info-label">Payment Terms</div>
+                    <div class="info-value">Milestone Based</div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="info-label">Advance Payment</div>
+                    <div class="info-value">15%</div>
+                </div>
+            </div>
+
+            <!-- LOCATION DETAILS -->
+            <div class="section-title">Location</div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-label">State</div>
+                    <div class="info-value">Madhya Pradesh</div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="info-label">City</div>
+                    <div class="info-value">Indore</div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="info-label">Full Address</div>
+                    <div class="info-value">Plot No. 22, Vijay Nagar, Near Apollo Hospital, Indore</div>
+                </div>
+            </div>
+
+            <!-- TIMELINE -->
+            <div class="section-title">Timeline</div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-label">Start Date</div>
+                    <div class="info-value">10 March 2025</div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="info-label">Deadline</div>
+                    <div class="info-value">30 December 2025</div>
+                </div>
+            </div>
+
+            <!-- REQUIREMENTS -->
+            <div class="section-title">Requirements</div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-label">Required Workers</div>
+                    <div class="info-value">20 Workers</div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="info-label">Required Skills</div>
+                    <div class="info-value">Mason, Electrician, Plumber, Welder</div>
+                </div>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="section-title">Description</div>
+            <p class="info-value">
+                This residential construction project includes 4 floors with 12 flats.
+                Work involves RCC structure, electrical wiring, plumbing, flooring,
+                painting, and interior finishing. All safety measures must be followed.
+            </p>
+
+            <!-- ATTACHMENTS -->
+            <div class="section-title">Attachments</div>
+
+            <ul>
+                <li><a href="#" target="_blank">Project Blueprint.pdf</a></li>
+                <li><a href="#" target="_blank">Floor Layout Plan.png</a></li>
+                <li><a href="#" target="_blank">Material List.xls</a></li>
+            </ul>
+
+            <hr>
+
+            <!-- ACTION BUTTONS -->
+            <div class="text-center">
+                <button class="btn btn-warning me-2">✏️ Edit Project</button>
+                <button class="btn btn-danger">🗑 Delete Project</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2025 The Builder Project | Contractor Dashboard
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

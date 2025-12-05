@@ -3,7 +3,8 @@ from django.conf import settings
 from django.shortcuts import redirect, render
 from The_Builder.models import Users
 from The_Builder.settings import BASE_DIR
-from datetime import datetime
+from datetime import datetime, date
+from django.contrib import messages
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
@@ -75,14 +76,82 @@ def contractore_edit_profile(request):
 def project_page1(request):
     token_data = request.session.get("data")
     obj = Users.objects.get(user_id=token_data["user_id"])
-    return render(request, 'project_page1.html',{"obj":obj})
+
+    # ✔ Get all projects of this user
+    from contractor.models import ContractorProject
+    user_projects = ContractorProject.objects.filter(user=obj)
+
+    return render(request, 'project_page1.html', {
+        "obj": obj,
+        "projects": user_projects,
+        "today": date.today()
+    })
+
 
 def add_project(request):
     token_data = request.session.get("data")
     obj = Users.objects.get(user_id=token_data["user_id"])
+
+    if request.method == "POST":
+        project_title = request.POST.get("project_title")
+        project_category = request.POST.get("project_category")
+        budget = request.POST.get("budget")
+        payment_terms = request.POST.get("payment_terms")
+        advance_payment = request.POST.get("advance_payment")
+        state = request.POST.get("state")
+        city = request.POST.get("city")
+        full_address = request.POST.get("full_address")
+        start_date = request.POST.get("start_date")
+        deadline = request.POST.get("deadline")
+        required_workers = request.POST.get("workers")
+        required_skills = request.POST.get("skills")
+        project_description = request.POST.get("project_description")
+
+        # ⛔ WRONG: request.FILES.get("attachments")
+        # ✅ Correct: getlist()
+        files = request.FILES.getlist("attachments")
+
+        # -----------------------------------------------------
+        # 1) Create Project
+        # -----------------------------------------------------
+        from contractor.models import ContractorProject, ProjectAttachment
+
+        new_project = ContractorProject.objects.create(
+            user=obj,
+            project_title=project_title,
+            project_category=project_category,
+            budget=budget,
+            payment_terms=payment_terms,
+            advance_payment=advance_payment,
+            state=state,
+            city=city,
+            full_address=full_address,
+            start_date=start_date,
+            deadline=deadline,
+            required_workers=required_workers,
+            required_skills=required_skills,
+            project_description=project_description,
+        )
+
+        # -----------------------------------------------------
+        # 2) Save Multiple Attachments
+        # -----------------------------------------------------
+        for f in files:
+            ProjectAttachment.objects.create(
+                project=new_project,
+                file=f
+            )
+        messages.success(request, "🎉 Project added successfully!")
+        return redirect('/contractor/project_page1/')
+
     return render(request, 'add_projects.html',{"obj":obj})
 
-def view_project(request,pid):
+
+from django.shortcuts import render, get_object_or_404, redirect
+from contractor.models import ContractorProject
+def view_project(request,project_id):
     token_data = request.session.get("data")
     obj = Users.objects.get(user_id=token_data["user_id"])
-    return render(request, 'view_project.html',{"obj":obj,"pid":pid})
+    project = get_object_or_404(ContractorProject, id=project_id)
+    return render(request, 'view_project.html',{"obj":obj,"project":project})
+

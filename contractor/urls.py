@@ -11,5 +11,6 @@ urlpatterns = [
     path('profile_edit/',views.contractore_edit_profile),
     path('project_page1/',views.project_page1),
     path('project_page1/add_project/',views.add_project),
-    path('project_page1/view_project/<int:pid>/',views.view_project),
+    path('project_page1/view_project/<int:project_id>/',views.view_project,name="view_project"),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

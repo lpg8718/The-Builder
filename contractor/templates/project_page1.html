@@ -16,8 +16,52 @@
         }
 
         body {
-            overflow: hidden; /* body scroll removed */
+            overflow: hidden;
+            /* body scroll removed */
         }
+
+
+        /* Profile Dropdown */
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #facc15;
+        }
+
+        .dropdown-menu-custom {
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            min-width: 160px;
+            z-index: 10;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .dropdown-menu-custom a {
+            padding: 0px 15px;
+            color: #1e293b;
+            text-decoration: none;
+            /* transition: background 0.3s; */
+        }
+
+        .dropdown-menu-custom a:hover {
+            background: #facc15;
+            color: #000;
+            border-radius: 10%;
+        }
+
 
         /* ================================
            NAVBAR - FIXED
@@ -62,10 +106,11 @@
             z-index: 9999;
         }
 
-        #profilePic:hover + #dropdownMenu,
+        #profilePic:hover+#dropdownMenu,
         .dropdown-menu-custom:hover {
             display: block;
         }
+
 
         /* ================================
            LAYOUT (LEFT + RIGHT)
@@ -74,7 +119,8 @@
         .layout-wrapper {
             display: flex;
             margin-top: 70px;
-            height: calc(100vh - 70px - 60px); /* header + footer height */
+            height: calc(100vh - 70px - 60px);
+            /* header + footer height */
         }
 
         /* LEFT CONTENT SCROLLABLE */
@@ -138,16 +184,17 @@
                     <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
 
                     <li class="nav-item">
-                        <div class="profile-dropdown">
-                            <img src="/media/profile_images/{{ obj.user_profile_pic }}" 
-                                 class="profile-pic" id="profilePic">
+                        <div class="profile-dropdown" style="position: relative;">
+                            <img src="/media/profile_images/{{ obj.user_profile_pic }}" class="profile-pic"
+                                id="profilePic">
 
-                            <div class="dropdown-menu-custom" id="dropdownMenu">
+                            <div class="dropdown-menu-custom" id="dropdownMenu" style="position: absolute; right: 0;">
                                 <a href="/contractor/profile/">My Profile</a>
                                 <a href="#">Settings</a>
                                 <a href="/">Logout</a>
                             </div>
                         </div>
+
                     </li>
 
                 </ul>
@@ -160,6 +207,17 @@
 
         <!-- LEFT CONTENT SCROLL -->
         <div class="content-area">
+            <div class="container mt-3">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <h3>All Projects</h3>
                 <a href="/contractor/project_page1/add_project/" class="btn btn-primary">➕ Add New Project</a>
@@ -169,199 +227,31 @@
 
             <div class="row">
 
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/1/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/2/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/3/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/4/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/5/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/6/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/7/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/8/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/9/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/10/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/11/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/12/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/13/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/14/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/15/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <h5>🏢 Apartment Construction</h5>
-                        <p><b>Budget:</b> ₹50,00,000</p>
-                        <p><b>Location:</b> Indore</p>
-                        <p><b>Deadline:</b> 12 Months</p>
-                        <span class="badge bg-info">Open for Applications</span>
-                        <br><br>
-                        <a href="/contractor/project_page1/view_project/16/" class="btn btn-primary btn-sm">View Details</a>
-                    </div>
-                    
-                </div>
 
+                {% for project in projects %}
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <h5>🏢 {{ project.project_title }}</h5>
+                        <p><b>Budget:</b> ₹{{ project.budget }}</p>
+                        <p><b>Location:</b> {{ project.city }}, {{ project.state }}</p>
+                        <p><b>Deadline:</b> {{ project.deadline|date:"d M Y" }}</p>
+
+                        {% if project.deadline >= today %}
+                        <span class="badge bg-info">Open for Applications</span>
+                        {% else %}
+                        <span class="badge bg-secondary">Closed</span>
+                        {% endif %}
+
+
+                        <br><br>
+                        <a href="{% url 'view_project' project.id %}" class="btn btn-primary btn-sm">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No projects found.</p>
+                {% endfor %}
             </div>
         </div>
 
@@ -371,7 +261,7 @@
             <hr>
 
             <!--  Your repeated cards here -->
-        
+
             <div class="p-3 mb-3 bg-white shadow-sm rounded">
                 <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
                 <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
@@ -420,7 +310,7 @@
                 <b>Ravi Sharma</b> applied for <b>Apartment Construction</b><br>
                 <a href="#" class="btn btn-success mt-2 btn-sm">View Profile</a>
             </div>
-            
+
         </div>
 
     </div>
@@ -429,7 +319,22 @@
     <footer>
         © 2025 The Builder Project | Contractor Dashboard
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const profilePic = document.getElementById("profilePic");
+        const dropdownMenu = document.getElementById("dropdownMenu");
 
+        profilePic.addEventListener("click", function (event) {
+            event.stopPropagation();
+            dropdownMenu.style.display =
+                dropdownMenu.style.display === "block" ? "none" : "block";
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function () {
+            dropdownMenu.style.display = "none";
+        });
+    </script>
 </body>
 
 </html>

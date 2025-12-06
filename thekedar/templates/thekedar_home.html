@@ -1,16 +1,59 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thekedar Dashboard - The Builder Project</title>
+  <title>Thekedar – All Projects</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+  <style>
+    /* Profile Dropdown */
+    .profile-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #facc15;
+    }
+
+    .dropdown-menu-custom {
+      position: absolute;
+      right: 0;
+      top: 50px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      min-width: 160px;
+      z-index: 10;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .dropdown-menu-custom a {
+      padding: 0px 15px;
+      color: #1e293b;
+      text-decoration: none;
+      /* transition: background 0.3s; */
+    }
+
+    .dropdown-menu-custom a:hover {
+      background: #facc15;
+      color: #000;
+      border-radius: 10%;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -21,11 +64,23 @@
       <a class="navbar-brand" href="#">👷 Thekedar Dashboard</a>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="/thekedar/">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="/thekedar/projects_all/">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Workers</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Payments</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+          <li class="nav-item">
+            <div class="profile-dropdown" style="position: relative;">
+              <img src="/media/profile_images/{{ obj.user_profile_pic }}" class="profile-pic" id="profilePic">
+
+              <div class="dropdown-menu-custom" id="dropdownMenu" style="position: absolute; right: 0;">
+                <a href="/thekedar/profile/">My Profile</a>
+                <a href="#">Settings</a>
+                <a href="/">Logout</a>
+              </div>
+            </div>
+
+          </li>
         </ul>
       </div>
     </div>
@@ -38,8 +93,8 @@
     <h1>Welcome Thekedar 🙏</h1>
   </section>
   {% endblock %}
-   
-  
+
+
   <!-- Main Content -->
   <div class="container my-4">
     <div class="grid-2-col">
@@ -53,7 +108,7 @@
             <div class="card-accent text-center">
               <h5>Projects</h5>
               <p>12 Ongoing</p>
-              <button class="btn-accent btn-sm">View</button>
+              <a href="/thekedar/projects_all/"><button class="btn-accent btn-sm">View</button></a>
             </div>
           </div>
           <div class="col-md-4">
@@ -72,7 +127,7 @@
           </div>
         </div>
         {% endblock %}
-         
+
         {% block kanban %}
         <!-- Kanban -->
         <div class="card p-3 mb-3">
@@ -130,9 +185,9 @@
         </div>
         {% endblock %}
       </div>
-       {% endblock %}
+      {% endblock %}
 
-       {% block right_side %}
+      {% block right_side %}
       <!-- Right side -->
       <div>
         <div class="card p-3 mb-3">
@@ -152,10 +207,10 @@
         </div>
       </div>
       {% endblock %}
-     
+
     </div>
   </div>
-{% block footer %}
+  {% block footer %}
   <!-- Footer -->
   <footer>
     <p>&copy; 2025 The Builder Project | Thekedar Dashboard</p>
@@ -170,6 +225,22 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="{% static 'js/home.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const profilePic = document.getElementById("profilePic");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+
+    profilePic.addEventListener("click", function (event) {
+      event.stopPropagation();
+      dropdownMenu.style.display =
+        dropdownMenu.style.display === "block" ? "none" : "block";
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function () {
+      dropdownMenu.style.display = "none";
+    });
+  </script>
 </body>
 
 </html>

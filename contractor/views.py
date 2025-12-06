@@ -36,10 +36,11 @@ def contractore_edit_profile(request):
             user_about_me = request.POST.get("about_me","")
             print(user_fullname, user_address, user_city, user_profile_image,user_profile, user_state, user_zip_code, user_country, user_about_me)
             print("Profile id:", token_data["user_id"])
-            ext=user_profile_image.name.split('.')[-1]
 
 
             if user_profile_image:
+                ext=user_profile_image.name.split('.')[-1]
+                print("Uploading new profile image")
                 upload_folder = os.path.join(settings.MEDIA_ROOT,"profile_images")
                 if not os.path.exists(upload_folder):
                     os.makedirs(upload_folder)
@@ -50,6 +51,7 @@ def contractore_edit_profile(request):
                     for chunk in user_profile_image.chunks():
                         f.write(chunk)
             else:
+                print("No new profile image uploaded")
                 file_name= obj.user_profile_pic
                 
                 

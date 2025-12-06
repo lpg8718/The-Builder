@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile - Contractor | The Builder Project</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+
+    .navbar {
+      background: #0f172a;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      color: #facc15 !important;
+    }
+
+    .nav-link {
+      color: #f1f5f9 !important;
+    }
+
+    .nav-link:hover {
+      color: #facc15 !important;
+    }
+
+    .profile-section {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      padding: 30px;
+      margin-top: 40px;
+    }
+
+    .profile-pic-wrapper {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid #facc15;
+      object-fit: cover;
+    }
+
+    .upload-btn {
+      display: block;
+      margin: 10px auto 0;
+      background: #facc15;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 25px;
+      font-weight: 500;
+      color: #000;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .upload-btn:hover {
+      background: #eab308;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .save-btn {
+      background: #0f172a;
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .save-btn:hover {
+      background: #facc15;
+      color: #000;
+    }
+
+    footer {
+      background: #0f172a;
+      color: #f1f5f9;
+      text-align: center;
+      padding: 15px;
+      margin-top: 50px;
+    }
+
+    .social-icons a {
+      color: #facc15;
+      margin: 0 10px;
+      font-size: 20px;
+      transition: transform 0.3s;
+    }
+
+    .social-icons a:hover {
+      transform: scale(1.3);
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">🏗 Contractor Dashboard</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/contractor">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contractor/project_page1">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Workers</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+          <li class="nav-item"><a class="nav-link" href="/">Logout</a></li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Profile Edit Section -->
+  <div class="container">
+    <div class="profile-section" data-aos="fade-up">
+      <h2 class="text-center mb-4">✏️ Edit Your Profile</h2>
+      <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+      
+        <!-- Profile Picture -->
+        <div class="profile-pic-wrapper">
+          <img src="/media/profile_images/{{ obj.user_profile_pic }}" class="profile-pic" id="profileImage">
+          <input type="file" id="uploadInput" class="d-none" name="profile_picture" accept="image/*">
+          <button type="button" class="upload-btn" onclick="document.getElementById('uploadInput').click()">Upload New Photo</button>
+        </div>
+
+        <!-- Profile Form -->
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" placeholder="Enter your name" name="fullname" value="{{ obj.user_full_name }}">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control" placeholder="Enter your username" name="username" value="{{ obj.user_username }}" readonly>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Profile</label>
+            <input type="text" class="form-control" placeholder="Enter your profile" name="profile" value="{{ obj.user_profile }}">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" placeholder="Enter your email" name="email" value="{{ obj.user_email }}" readonly>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Phone</label>
+            <input type="tel" class="form-control" placeholder="Enter your phone" name="phone" value="{{ obj.user_phone }}" readonly>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Address</label>
+            <input type="text" class="form-control" placeholder="Enter your address" name="address" value="{{ obj.user_address }}">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">City</label>
+            <input type="text" class="form-control" placeholder="Enter your city" name="city" value="{{ obj.user_city }}">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">State</label>
+            <input type="text" class="form-control" placeholder="Enter your state" name="state" value="{{ obj.user_state }}">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Zip Code</label>
+            <input type="text" class="form-control" placeholder="Enter your zip code" name="zip_code" value="{{ obj.user_zipcode }}">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Country</label>
+            <input type="text" class="form-control" placeholder="Enter your country" name="country" value="{{ obj.user_country }}">
+          </div>
+          <div class="col-md-12">
+            <label class="form-label">About Me</label>
+            <textarea class="form-control" rows="3"
+              placeholder="Write about yourself"  name="about_me">{{ obj.user_about }}</textarea>
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <button type="submit" class="save-btn">💾 Save Changes</button>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 The Builder Project | Contractor Profile Edit</p>
+    <div class="social-icons">
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="#"><i class="bi bi-twitter"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+
+    // Image preview
+    const uploadInput = document.getElementById("uploadInput");
+    const profileImage = document.getElementById("profileImage");
+    uploadInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        profileImage.src = URL.createObjectURL(file);
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -76,8 +76,12 @@ def thekedar_profile_edit(request):
             return render(request, 'thekedar_profile_edit.html',{"obj":obj})
     return render(request, 'thekedar_profile_edit.html', {'obj': obj})
 
-
+from contractor.models import ContractorProject
 def thekedar_projects_all(request):
+    
     token_data = request.session.get("data")
     obj = Users.objects.get(user_id=token_data["user_id"])
-    return render(request, 'projects_all.html', {'obj': obj})
+    print("Thekedar:", obj)
+    projects = ContractorProject.objects.select_related('user').all()
+    print("Projects:", projects)
+    return render(request, 'projects_all.html', {'obj': obj, 'projects': projects})

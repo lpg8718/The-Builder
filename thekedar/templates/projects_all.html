@@ -246,16 +246,16 @@
 
         </div>
       </div>
-
-      <div class="col-md-4">
+      {% for project in projects %}
+        <div class="col-md-4">
         <div class="card project-card">
           <img src="https://blog.tatanexarc.com/wp-content/uploads/2023/04/Tips-for-Winning-Construction-tender-Projects.jpg" class="project-img" />
 
           <div class="card-body">
-            <h5 class="card-title">Building Renovation Project</h5>
-            <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Indore, MP</p>
-            <p class="text-muted mb-1"><i class="bi bi-cash-stack"></i> ₹50,000 - ₹75,000</p>
-            <p class="text-muted"><i class="bi bi-person-fill"></i> Contractor: Sharma Builders</p>
+            <h5 class="card-title">{{ project.project_title }}</h5>
+            <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> {{ project.city }}, {{ project.state }}</p>
+            <p class="text-muted mb-1"><i class="bi bi-cash-stack"></i> ₹{{ project.budget }} </p>
+            <p class="text-muted"><i class="bi bi-person-fill"></i> Contractor: {{ project.user.user_username }}</p>
 
             <div class="d-flex justify-content-between mt-3">
               <a class="btn btn-outline-primary btn-sm">View Details</a>
@@ -265,158 +265,7 @@
 
         </div>
       </div>
-
-      <div class="col-md-4">
-        <div class="card project-card">
-          <img src="https://blog.tatanexarc.com/wp-content/uploads/2023/04/Tips-for-Winning-Construction-tender-Projects.jpg" class="project-img" />
-
-          <div class="card-body">
-            <h5 class="card-title">Building Renovation Project</h5>
-            <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Indore, MP</p>
-            <p class="text-muted mb-1"><i class="bi bi-cash-stack"></i> ₹50,000 - ₹75,000</p>
-            <p class="text-muted"><i class="bi bi-person-fill"></i> Contractor: Sharma Builders</p>
-
-            <div class="d-flex justify-content-between mt-3">
-              <a class="btn btn-outline-primary btn-sm">View Details</a>
-              <a class="btn btn-success btn-sm">Apply</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card project-card">
-          <img src="https://blog.tatanexarc.com/wp-content/uploads/2023/04/Tips-for-Winning-Construction-tender-Projects.jpg" class="project-img" />
-
-          <div class="card-body">
-            <h5 class="card-title">Building Renovation Project</h5>
-            <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Indore, MP</p>
-            <p class="text-muted mb-1"><i class="bi bi-cash-stack"></i> ₹50,000 - ₹75,000</p>
-            <p class="text-muted"><i class="bi bi-person-fill"></i> Contractor: Sharma Builders</p>
-
-            <div class="d-flex justify-content-between mt-3">
-              <a class="btn btn-outline-primary btn-sm">View Details</a>
-              <a class="btn btn-success btn-sm">Apply</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card project-card">
-          <img src="https://blog.tatanexarc.com/wp-content/uploads/2023/04/Tips-for-Winning-Construction-tender-Projects.jpg" class="project-img" />
-
-          <div class="card-body">
-            <h5 class="card-title">Building Renovation Project</h5>
-            <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Indore, MP</p>
-            <p class="text-muted mb-1"><i class="bi bi-cash-stack"></i> ₹50,000 - ₹75,000</p>
-            <p class="text-muted"><i class="bi bi-person-fill"></i> Contractor: Sharma Builders</p>
-
-            <div class="d-flex justify-content-between mt-3">
-              <a class="btn btn-outline-primary btn-sm">View Details</a>
-              <a class="btn btn-success btn-sm">Apply</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card project-card">
-          <img src="https://blog.tatanexarc.com/wp-content/uploads/2023/04/Tips-for-Winning-Construction-tender-Projects.jpg" class="project-img" />
-
-          <div class="card-body">
-            <h5 class="card-title">Building Renovation Project</h5>
-            <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Indore, MP</p>
-            <p class="text-muted mb-1"><i class="bi bi-cash-stack"></i> ₹50,000 - ₹75,000</p>
-            <p class="text-muted"><i class="bi bi-person-fill"></i> Contractor: Sharma Builders</p>
-
-            <div class="d-flex justify-content-between mt-3">
-              <a class="btn btn-outline-primary btn-sm">View Details</a>
-              <a class="btn btn-success btn-sm">Apply</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card project-card">
-          <img src="https://blog.tatanexarc.com/wp-content/uploads/2023/04/Tips-for-Winning-Construction-tender-Projects.jpg" class="project-img" />
-
-          <div class="card-body">
-            <h5 class="card-title">Building Renovation Project</h5>
-            <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Indore, MP</p>
-            <p class="text-muted mb-1"><i class="bi bi-cash-stack"></i> ₹50,000 - ₹75,000</p>
-            <p class="text-muted"><i class="bi bi-person-fill"></i> Contractor: Sharma Builders</p>
-
-            <div class="d-flex justify-content-between mt-3">
-              <a class="btn btn-outline-primary btn-sm">View Details</a>
-              <a class="btn btn-success btn-sm">Apply</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card project-card">
-          <img src="https://blog.tatanexarc.com/wp-content/uploads/2023/04/Tips-for-Winning-Construction-tender-Projects.jpg" class="project-img" />
-
-          <div class="card-body">
-            <h5 class="card-title">Building Renovation Project</h5>
-            <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Indore, MP</p>
-            <p class="text-muted mb-1"><i class="bi bi-cash-stack"></i> ₹50,000 - ₹75,000</p>
-            <p class="text-muted"><i class="bi bi-person-fill"></i> Contractor: Sharma Builders</p>
-
-            <div class="d-flex justify-content-between mt-3">
-              <a class="btn btn-outline-primary btn-sm">View Details</a>
-              <a class="btn btn-success btn-sm">Apply</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card project-card">
-          <img src="https://blog.tatanexarc.com/wp-content/uploads/2023/04/Tips-for-Winning-Construction-tender-Projects.jpg" class="project-img" />
-
-          <div class="card-body">
-            <h5 class="card-title">Building Renovation Project</h5>
-            <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Indore, MP</p>
-            <p class="text-muted mb-1"><i class="bi bi-cash-stack"></i> ₹50,000 - ₹75,000</p>
-            <p class="text-muted"><i class="bi bi-person-fill"></i> Contractor: Sharma Builders</p>
-
-            <div class="d-flex justify-content-between mt-3">
-              <a class="btn btn-outline-primary btn-sm">View Details</a>
-              <a class="btn btn-success btn-sm">Apply</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card project-card">
-          <img src="https://blog.tatanexarc.com/wp-content/uploads/2023/04/Tips-for-Winning-Construction-tender-Projects.jpg" class="project-img" />
-
-          <div class="card-body">
-            <h5 class="card-title">Building Renovation Project</h5>
-            <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Indore, MP</p>
-            <p class="text-muted mb-1"><i class="bi bi-cash-stack"></i> ₹50,000 - ₹75,000</p>
-            <p class="text-muted"><i class="bi bi-person-fill"></i> Contractor: Sharma Builders</p>
-
-            <div class="d-flex justify-content-between mt-3">
-              <a class="btn btn-outline-primary btn-sm">View Details</a>
-              <a class="btn btn-success btn-sm">Apply</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
+      {% endfor %}
    
 
     </div>

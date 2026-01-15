@@ -141,7 +141,7 @@
     /* Footer */
     footer {
       background: var(--nav);
-      color: #f1f5f9;
+      color: #f1f5f9 !important;
       text-align: center;
       padding: 12px;
       margin-top: 30px;

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thekedar – Project Details</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --nav: #0f172a;
+            --accent: #facc15;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            /* Prevent horizontal scroll on mobile */
+            overflow-x: hidden;
+        }
+
+        /* --- Navbar Styles --- */
+        .navbar {
+            background: var(--nav) !important;
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            color: var(--accent) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 500;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent) !important;
+        }
+
+        /* Profile Dropdown */
+        /* ✅ Full width fix */
+        .container {
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--nav) !important;
+        }
+
+        .navbar-brand {
+            color: var(--accent) !important;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: #f1f5f9 !important;
+        }
+
+        .nav-link:hover {
+            color: var(--accent) !important;
+        }
+
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #facc15;
+        }
+
+        .dropdown-menu-custom {
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            min-width: 160px;
+            z-index: 10;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .dropdown-menu-custom a {
+            padding: 0px 15px;
+            color: #1e293b;
+            text-decoration: none;
+            /* transition: background 0.3s; */
+        }
+
+        .dropdown-menu-custom a:hover {
+            background: #facc15;
+            color: #000;
+            border-radius: 10%;
+        }
+
+        /* --- Page Content Styles --- */
+        .detail-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .carousel-img {
+            height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        /* Responsive adjustments for image height on mobile */
+        @media (max-width: 768px) {
+            .carousel-img {
+                height: 250px;
+            }
+
+            .detail-card {
+                padding: 15px;
+            }
+        }
+
+        .info-label {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+         /* Footer */
+    footer {
+      background: var(--nav);
+      color: #f1f5f9;
+      text-align: center;
+      padding: 12px;
+      margin-top: 30px;
+    }
+
+    .social-icons a {
+      color: var(--accent);
+      margin: 0 6px;
+      font-size: 18px;
+    }
+
+    .social-icons a:hover {
+      color: #fff;
+    }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">👷 Thekedar Dashboard</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/thekedar/">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/thekedar/projects_all/">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Workers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Payments</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+                    <li class="nav-item">
+                        <div class="profile-dropdown" style="position: relative;">
+                            <img src="/media/profile_images/{{ obj.user_profile_pic }}" class="profile-pic"
+                                id="profilePic">
+
+                            <div class="dropdown-menu-custom" id="dropdownMenu" style="position: absolute; right: 0;">
+                                <a href="/thekedar/profile/">My Profile</a>
+                                <a href="#">Settings</a>
+                                <a href="/">Logout</a>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="text-center my-4">
+        <h2>
+            <span style="background:#facc15; padding:6px 14px; border-radius:8px; display:inline-block;">
+                Project Details
+            </span>
+        </h2>
+    </section>
+
+    <div class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-md-12">
+                <div class="detail-card">
+
+                    {% if messages %}
+                    <div class="container-fluid px-0 mb-3">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div id="carouselProject{{ project.id }}" class="carousel slide mb-4">
+                        <div class="carousel-inner">
+                            {% for img in project.files.all %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="{{ img.file.url }}" class="d-block w-100 carousel-img">
+                            </div>
+                            {% empty %}
+                            <div class="carousel-item active">
+                                <img src="/static/images/no-image.png" class="d-block w-100 carousel-img"
+                                    alt="No Image">
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        {% if project.files.count > 1 %}
+                        <button class="carousel-control-prev" type="button"
+                            data-bs-target="#carouselProject{{ project.id }}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button"
+                            data-bs-target="#carouselProject{{ project.id }}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                        {% endif %}
+                    </div>
+
+                    <h3>{{ project.project_title }}</h3>
+                    <p class="text-muted"><i class="bi bi-geo-alt-fill text-danger"></i> {{ project.city }}, {{
+                        project.state }}</p>
+
+                    <hr>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <span class="info-label">Budget</span>
+                            <span class="info-value">₹{{ project.budget }}</span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <span class="info-label">Category</span>
+                            <span class="info-value">{{ project.project_category }}</span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <span class="info-label">Workers Req.</span>
+                            <span class="info-value">{{ project.required_workers }}</span>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <span class="info-label">Start Date</span>
+                            <span class="info-value">{{ project.start_date }}</span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <span class="info-label">Deadline</span>
+                            <span class="info-value">{{ project.deadline }}</span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <span class="info-label">Advance</span>
+                            <span class="info-value">₹{{ project.advance_payment }}</span>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h6>Description</h6>
+                    <p class="text-secondary">{{ project.project_description }}</p>
+
+                    <hr>
+
+                    <div class="d-flex flex-wrap justify-content-between gap-2">
+                        <a href="/thekedar/projects_all/" class="btn btn-outline-secondary px-4">Back</a>
+                        <a href="/thekedar/apply_project?id={{ project.id }}" class="btn btn-success px-4">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-3">
+        <small>&copy; 2025 The Builder Project</small>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const profilePic = document.getElementById('profilePic');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+
+            // Toggle menu on click
+            profilePic.addEventListener('click', function (e) {
+                e.stopPropagation(); // Prevent click from bubbling to document
+                dropdownMenu.classList.toggle('show-dropdown');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function (e) {
+                if (!profilePic.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                    dropdownMenu.classList.remove('show-dropdown');
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

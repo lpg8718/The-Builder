@@ -6,6 +6,8 @@ from The_Builder.settings import BASE_DIR
 from datetime import datetime, date
 from django.contrib import messages
 
+from thekedar.models import ProjectApplication
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
@@ -78,10 +80,94 @@ def thekedar_profile_edit(request):
 
 from contractor.models import ContractorProject
 def thekedar_projects_all(request):
-    
     token_data = request.session.get("data")
     obj = Users.objects.get(user_id=token_data["user_id"])
     print("Thekedar:", obj)
-    projects = ContractorProject.objects.select_related('user').all()
+    projects = ContractorProject.objects.select_related('user').prefetch_related("files").all()
     print("Projects:", projects)
     return render(request, 'projects_all.html', {'obj': obj, 'projects': projects})
+
+
+
+def apply_project(request):
+    project_id = request.GET.get("id")
+    token_data = request.session.get("data")
+    obj = Users.objects.get(user_id=token_data["user_id"])
+    projects = ContractorProject.objects.select_related('user').filter(id=project_id).first()
+    if ProjectApplication.objects.filter(
+        project=projects,
+        applicant=obj
+    ).exists():
+        messages.warning(request, "You have already applied for this project.")
+        return redirect(f"/thekedar/project_details?id={projects.id}")
+
+    if request.method=="POST":
+        experience_years = request.POST.get("experience_years")
+        proposed_budget = request.POST.get("proposed_budget")
+        estimated_duration = request.POST.get("estimated_duration")
+        machines_equipment = request.POST.get("machines_equipment")
+        why_select_you = request.POST.get("why_select_you")
+
+        # Basic validation
+        if not all([
+            experience_years,
+            proposed_budget,
+            estimated_duration,
+            machines_equipment,
+            why_select_you
+        ]):
+            messages.error(request, "All fields are required.")
+            return render(
+                request,
+                "apply_project.html",
+                {"project": projects, "obj": obj}
+            )
+
+        # Save application
+        ProjectApplication.objects.create(
+            project=projects,
+            applicant=obj,
+            experience_years=experience_years,
+            proposed_budget=proposed_budget,
+            estimated_duration=estimated_duration,
+            machines_equipment=machines_equipment,
+            why_select_you=why_select_you,
+        )
+
+        messages.success(request, "Application submitted successfully.")
+        return redirect(f"/thekedar/project_details?id={projects.id}")
+    else:
+
+        print(projects)
+        return render(request, "apply_project.html",{'obj': obj, 'project': projects})
+
+
+
+
+from django.shortcuts import render, get_object_or_404
+def project_details(request):
+    project_id = request.GET.get("id")
+
+    if not project_id:
+        return redirect("/thekedar/projects_all/")
+
+    # Logged-in user
+    token_data = request.session.get("data")
+    obj = Users.objects.get(user_id=token_data["user_id"])
+
+    # Project with attachments
+    project = get_object_or_404(
+        ContractorProject.objects
+        .select_related("user")
+        .prefetch_related("files"),
+        id=project_id
+    )
+
+    return render(
+        request,
+        "project_details.html",
+        {
+            "obj": obj,
+            "project": project
+        }
+    )

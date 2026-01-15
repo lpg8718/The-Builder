@@ -157,3 +157,32 @@ def view_project(request,project_id):
     project = get_object_or_404(ContractorProject, id=project_id)
     return render(request, 'view_project.html',{"obj":obj,"project":project})
 
+
+
+
+def project_application(request):
+    token_data = request.session.get("data")
+    if not token_data:
+        return redirect("/")  
+
+    # Logged-in contractor (Users table)
+    obj = Users.objects.get(user_id=token_data["user_id"])
+
+    # Fetch ONLY this contractor's projects
+    projects = ContractorProject.objects.filter(
+        user=obj
+    ).select_related(
+        "user"
+    ).prefetch_related(
+        "files",
+        "applications__applicant"
+    )
+
+    return render(
+        request,
+        "project_applications.html",
+        {
+            "obj": obj,
+            "projects": projects
+        }
+    )

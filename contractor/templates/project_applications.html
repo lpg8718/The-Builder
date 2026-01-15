@@ -1,0 +1,418 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Applications - Contractor Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <style>
+        /* --- 1. GLOBAL VARIABLES & RESET --- */
+        :root {
+            --primary-bg: #f8fafc;
+            /* Light Grey Background */
+            --card-bg: #ffffff;
+            /* White Card Background */
+            --text-dark: #1e293b;
+            /* Dark Text */
+            --nav-bg: #0f172a;
+            /* Dark Navy Navbar */
+            --accent-color: #facc15;
+            /* Yellow Accent */
+            --hover-bg: #fffbeb;
+            /* Light Yellow Hover */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- 2. NAVBAR STYLES --- */
+        .navbar {
+            background-color: var(--nav-bg);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: var(--accent-color) !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+
+        /* Profile Dropdown */
+        .profile-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            object-fit: cover;
+        }
+
+        .dropdown-menu-custom {
+            display: none;
+            /* Hidden by default */
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background: white;
+            min-width: 160px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .dropdown-menu-custom a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .dropdown-menu-custom a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .show-dropdown {
+            display: block !important;
+        }
+
+        /* --- 3. PAGE CONTENT STYLES --- */
+        .dashboard-header h1 {
+            font-weight: 700;
+            color: var(--nav-bg);
+        }
+
+        /* Filter Box */
+        .filter-container {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        /* --- 4. SCROLLABLE LIST AREA (Main Logic) --- */
+        .scrollable-container {
+            /* This defines the fixed height */
+            height: 60vh;
+            /* This enables scrolling */
+            overflow-y: auto;
+            /* Styling */
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 10px;
+        }
+
+        /* Custom Scrollbar Styling (Webkit browsers) */
+        .scrollable-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollable-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .scrollable-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .scrollable-container::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* List Items */
+        .application-row {
+            border: none;
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.2s ease-in-out;
+            padding: 15px;
+            margin-bottom: 5px;
+            border-radius: 8px !important;
+            /* Overriding Bootstrap */
+        }
+
+        .application-row:hover {
+            background-color: var(--hover-bg);
+            transform: translateX(5px);
+            /* Slight movement effect */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+
+        /* Avatar in list */
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #e2e8f0;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        /* --- 5. FOOTER --- */
+        footer {
+            margin-top: auto;
+            /* Pushes footer to bottom */
+            background-color: var(--nav-bg);
+            color: #f1f5f9;
+        }
+
+        .social-icons a {
+            color: #94a3b8;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- 6. RESPONSIVE TWEAKS --- */
+        @media (max-width: 768px) {
+            .scrollable-container {
+                height: 70vh;
+                /* Taller scroll area on mobile */
+            }
+
+            .application-row {
+                flex-direction: column;
+                /* Stack content on very small screens */
+                align-items: flex-start !important;
+            }
+
+            .badge-container {
+                margin-top: 10px;
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">🏗 Contractor Dashboard</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="/contractor">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contractor/project_page1">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Workers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+                    <li class="nav-item"><a class="nav-link active"
+                            href="/contractor/project_applications">Applications</a></li>
+
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <div class="profile-dropdown" onclick="toggleDropdown()">
+                            <img src="/media/profile_images/{{ obj.user_profile_pic }}"
+                                onerror="this.src='https://via.placeholder.com/40'" class="profile-pic" id="profilePic">
+
+                            <div class="dropdown-menu-custom" id="dropdownMenu">
+                                <a href="/contractor/profile/"><i class="bi bi-person me-2"></i>My Profile</a>
+                                <a href="#"><i class="bi bi-gear me-2"></i>Settings</a>
+                                <hr class="my-1">
+                                <a href="/" class="text-danger"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2 class="fw-bold mb-0">Project Applications <span
+                        class="badge bg-warning text-dark fs-6 align-middle">New</span></h2>
+                <p class="text-muted mt-1">Review workers applying to your sites.</p>
+            </div>
+
+            <div class="col-md-6">
+                <div class="filter-container d-flex align-items-center justify-content-md-end">
+                    <label class="me-2 fw-bold"><i class="bi bi-funnel"></i> Filter:</label>
+                    <select class="form-select w-auto">
+                        <option selected>All Projects</option>
+                        <option>Modern House Renovation</option>
+                        <option>Luxury Villa Construction</option>
+                        <option>Office Renovation</option>
+                        <option>Residential Building</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-4">
+        <div class="scrollable-container list-group">
+
+            {% for project in projects %}
+            <a href="#" class="list-group-item list-group-item-action application-row d-flex align-items-center">
+                <div class="user-avatar">RS</div>
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <h5 class="mb-1 fw-bold">{{project.user.user_username}}</h5>
+                        <small class="text-muted">
+                            {{ project.applications__applicant.applied_at|naturaltime }}
+                        </small>
+                    </div>
+                    <p class="mb-1 text-primary"><i class="bi bi-building"></i> {{ project.project_title }}</p>
+                </div>
+                <div class="ms-3 badge-container">
+                    <span class="badge bg-success rounded-pill px-3 py-2">5 yrs Exp</span>
+                </div>
+            </a>
+            {% endfor %}
+            <a href="#" class="list-group-item list-group-item-action application-row d-flex align-items-center">
+                <div class="user-avatar" style="background:#fecaca; color:#b91c1c;">AV</div>
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <h5 class="mb-1 fw-bold">Amit Verma</h5>
+                        <small class="text-muted">1 hour ago</small>
+                    </div>
+                    <p class="mb-1 text-primary"><i class="bi bi-building"></i> Luxury Villa Construction</p>
+                </div>
+                <div class="ms-3 badge-container">
+                    <span class="badge bg-success rounded-pill px-3 py-2">10 yrs Exp</span>
+                </div>
+            </a>
+
+            <a href="#" class="list-group-item list-group-item-action application-row d-flex align-items-center">
+                <div class="user-avatar" style="background:#bfdbfe; color:#1e40af;">SP</div>
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <h5 class="mb-1 fw-bold">Sunil Patidar</h5>
+                        <small class="text-muted">3 hours ago</small>
+                    </div>
+                    <p class="mb-1 text-primary"><i class="bi bi-building"></i> Office Renovation</p>
+                </div>
+                <div class="ms-3 badge-container">
+                    <span class="badge bg-secondary rounded-pill px-3 py-2">7 yrs Exp</span>
+                </div>
+            </a>
+
+            <a href="#" class="list-group-item list-group-item-action application-row d-flex align-items-center">
+                <div class="user-avatar">MJ</div>
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <h5 class="mb-1 fw-bold">Mohit Jain</h5>
+                        <small class="text-muted">Yesterday</small>
+                    </div>
+                    <p class="mb-1 text-primary"><i class="bi bi-building"></i> Residential Building</p>
+                </div>
+                <div class="ms-3 badge-container">
+                    <span class="badge bg-warning text-dark rounded-pill px-3 py-2">4 yrs Exp</span>
+                </div>
+            </a>
+
+            <a href="#" class="list-group-item list-group-item-action application-row d-flex align-items-center">
+                <div class="user-avatar">DK</div>
+                <div class="flex-grow-1">
+                    <h5 class="mb-1 fw-bold">Dinesh Kumar</h5>
+                    <p class="mb-1 text-primary"><i class="bi bi-building"></i> Modern House Renovation</p>
+                </div>
+                <div class="ms-3 badge-container">
+                    <span class="badge bg-success rounded-pill px-3 py-2">8 yrs Exp</span>
+                </div>
+            </a>
+
+            <a href="#" class="list-group-item list-group-item-action application-row d-flex align-items-center">
+                <div class="user-avatar">VS</div>
+                <div class="flex-grow-1">
+                    <h5 class="mb-1 fw-bold">Vikram Singh</h5>
+                    <p class="mb-1 text-primary"><i class="bi bi-building"></i> Luxury Villa</p>
+                </div>
+                <div class="ms-3 badge-container">
+                    <span class="badge bg-success rounded-pill px-3 py-2">12 yrs Exp</span>
+                </div>
+            </a>
+
+            <a href="#" class="list-group-item list-group-item-action application-row d-flex align-items-center">
+                <div class="user-avatar">RP</div>
+                <div class="flex-grow-1">
+                    <h5 class="mb-1 fw-bold">Rohan Patel</h5>
+                    <p class="mb-1 text-primary"><i class="bi bi-building"></i> Office Renovation</p>
+                </div>
+                <div class="ms-3 badge-container">
+                    <span class="badge bg-warning text-dark rounded-pill px-3 py-2">2 yrs Exp</span>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <footer class="text-center py-4">
+        <p class="mb-2">&copy; 2025 The Builder Project | Contractor Dashboard</p>
+        <div class="social-icons">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-whatsapp"></i></a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function toggleDropdown() {
+            var menu = document.getElementById("dropdownMenu");
+            menu.classList.toggle("show-dropdown");
+        }
+
+        // Close dropdown if clicked outside
+        window.onclick = function (event) {
+            if (!event.target.matches('.profile-pic')) {
+                var dropdowns = document.getElementsByClassName("dropdown-menu-custom");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show-dropdown')) {
+                        openDropdown.classList.remove('show-dropdown');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

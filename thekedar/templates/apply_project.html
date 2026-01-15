@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thekedar – Apply Project</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --nav: #0f172a;
+            --accent: #facc15;
+            --card: #504b69;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 100% !important;
+        }
+
+        .navbar {
+            background: var(--nav) !important;
+        }
+
+        .navbar-brand {
+            color: var(--accent) !important;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: #f1f5f9 !important;
+        }
+
+        .nav-link:hover {
+            color: var(--accent) !important;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid var(--accent);
+        }
+
+        .apply-card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+
+        .project-summary {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background: var(--nav);
+            color: #f1f5f9 !important;
+            text-align: center;
+            padding: 12px;
+            margin-top: 40px;
+        }
+
+        .social-icons a {
+            color: var(--accent);
+            margin: 0 6px;
+            font-size: 18px;
+        }
+
+        .social-icons a:hover {
+            color: #fff !important;;
+        }
+         /* Footer */
+    footer {
+      background: var(--nav);
+      color: #f1f5f9;
+      text-align: center;
+      padding: 12px;
+      margin-top: 30px;
+    }
+
+    .social-icons a {
+      color: var(--accent);
+      margin: 0 6px;
+      font-size: 18px;
+    }
+
+    .social-icons a:hover {
+      color: #fff;
+    }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">👷 Thekedar</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/thekedar/">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/thekedar/projects_all/">Projects</a></li>
+
+                    <li class="nav-item">
+                        <img src="/media/profile_images/{{ obj.user_profile_pic }}" class="profile-pic">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <section class="text-center my-4">
+        <h2>
+            <span style="background:#facc15;padding:6px 14px;border-radius:8px;">
+                Apply for Project
+            </span>
+        </h2>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <div class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+
+                <div class="apply-card">
+
+                    <!-- PROJECT SUMMARY -->
+                    <div class="project-summary">
+                        <h5 class="mb-2">{{ project.project_title }}</h5>
+                        <p class="mb-1 text-muted"><i class="bi bi-geo-alt"></i> {{ project.city }}, {{ project.state }}
+                        </p>
+                        <p class="mb-1 text-muted"><i class="bi bi-cash-stack"></i> ₹{{ project.budget }}</p>
+                        <p class="text-muted"><i class="bi bi-person-fill"></i> Contractor: {{ project.user.user_username }}</p>
+                    </div>
+
+                    <!-- APPLY FORM -->
+                    <form method="post" >
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">How many years of experience do you have in your field?</label>
+                            <input type="number" name="experience_years" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Proposed Budget (₹)</label>
+                            <input type="number" name="proposed_budget" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Estimated Duration (days)</label>
+                            <input type="number" name="estimated_duration" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Please list the machines and equipment you currently own.</label>
+                           <textarea name="machines_equipment" class="form-control" rows="4" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Why should we select you?</label>
+                            <textarea name="why_select_you" class="form-control" rows="4" required></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="/thekedar/projects_all/" class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+                            <button type="submit" class="btn btn-success px-4">
+                                Submit Application
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p style="color: #f1f5f9;">&copy; 2025 The Builder Project | Thekedar Dashboard</p>
+        <div class="social-icons">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

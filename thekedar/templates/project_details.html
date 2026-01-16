@@ -185,7 +185,7 @@
                     <li class="nav-item"><a class="nav-link" href="/thekedar/projects_all/">Projects</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Workers</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Payments</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/thekedar/messages">Messages</a></li>
                     <li class="nav-item">
                         <div class="profile-dropdown" style="position: relative;">
                             <img src="/media/profile_images/{{ obj.user_profile_pic }}" class="profile-pic"
@@ -297,7 +297,12 @@
 
                     <div class="d-flex flex-wrap justify-content-between gap-2">
                         <a href="/thekedar/projects_all/" class="btn btn-outline-secondary px-4">Back</a>
-                        <a href="/thekedar/apply_project?id={{ project.id }}" class="btn btn-success px-4">Apply Now</a>
+                        <div class="d-flex gap-2">
+                            <a href="/thekedar/messages/{{ project.user.user_id }}/" class="btn btn-warning px-4">
+                                <i class="bi bi-chat-dots me-2"></i>Message Contractor
+                            </a>
+                            <a href="/thekedar/apply_project?id={{ project.id }}" class="btn btn-success px-4">Apply Now</a>
+                        </div>
                     </div>
                 </div>
             </div>

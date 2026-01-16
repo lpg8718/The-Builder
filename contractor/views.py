@@ -150,7 +150,12 @@ def add_project(request):
 
 
 from django.shortcuts import render, get_object_or_404, redirect
-from contractor.models import ContractorProject
+from contractor.models import ContractorProject, Message
+from thekedar.models import ProjectApplication
+from django.db.models import Q, Max, Count
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+
 def view_project(request,project_id):
     token_data = request.session.get("data")
     obj = Users.objects.get(user_id=token_data["user_id"])
@@ -184,5 +189,154 @@ def project_application(request):
         {
             "obj": obj,
             "projects": projects
+        }
+    )
+
+
+def applicant_details(request, application_id):
+    """Show detailed information about an applicant"""
+    token_data = request.session.get("data")
+    if not token_data:
+        return redirect("/")
+    
+    obj = Users.objects.get(user_id=token_data["user_id"])
+    
+    # Get the application with related data
+    application = get_object_or_404(
+        ProjectApplication.objects.select_related('applicant', 'project'),
+        id=application_id
+    )
+    
+    # Verify that this application is for contractor's project
+    if application.project.user.user_id != obj.user_id:
+        messages.error(request, "You don't have permission to view this application.")
+        return redirect('/contractor/project_applications/')
+    
+    return render(
+        request,
+        'applicant_details.html',
+        {
+            'obj': obj,
+            'application': application,
+            'applicant': application.applicant,
+            'project': application.project
+        }
+    )
+
+
+def messages_list(request):
+    """List all conversations for the logged-in contractor"""
+    token_data = request.session.get("data")
+    if not token_data:
+        return redirect("/")
+    
+    obj = Users.objects.get(user_id=token_data["user_id"])
+    
+    # Get all unique users the contractor has messaged with
+    # Get latest message for each conversation
+    sent_messages = Message.objects.filter(sender=obj).values('receiver').annotate(
+        latest_message_time=Max('created_at')
+    )
+    received_messages = Message.objects.filter(receiver=obj).values('sender').annotate(
+        latest_message_time=Max('created_at')
+    )
+    
+    # Combine and get unique users
+    conversations = {}
+    
+    # Process sent messages
+    for msg in sent_messages:
+        receiver_id = msg['receiver']
+        if receiver_id not in conversations or msg['latest_message_time'] > conversations[receiver_id]['latest_time']:
+            latest_msg = Message.objects.filter(
+                Q(sender=obj, receiver_id=receiver_id) | Q(sender_id=receiver_id, receiver=obj)
+            ).order_by('-created_at').first()
+            conversations[receiver_id] = {
+                'user_id': receiver_id,
+                'latest_time': msg['latest_message_time'],
+                'latest_message': latest_msg
+            }
+    
+    # Process received messages
+    for msg in received_messages:
+        sender_id = msg['sender']
+        if sender_id not in conversations or msg['latest_message_time'] > conversations[sender_id]['latest_time']:
+            latest_msg = Message.objects.filter(
+                Q(sender=obj, receiver_id=sender_id) | Q(sender_id=sender_id, receiver=obj)
+            ).order_by('-created_at').first()
+            conversations[sender_id] = {
+                'user_id': sender_id,
+                'latest_time': msg['latest_message_time'],
+                'latest_message': latest_msg
+            }
+    
+    # Get user details and unread counts
+    conversation_list = []
+    for user_id, conv_data in conversations.items():
+        try:
+            other_user = Users.objects.get(user_id=user_id)
+            unread_count = Message.objects.filter(
+                sender=other_user,
+                receiver=obj,
+                is_read=False
+            ).count()
+            
+            conversation_list.append({
+                'user': other_user,
+                'latest_message': conv_data['latest_message'],
+                'unread_count': unread_count,
+                'latest_time': conv_data['latest_time']
+            })
+        except Users.DoesNotExist:
+            continue
+    
+    # Sort by latest message time
+    conversation_list.sort(key=lambda x: x['latest_time'], reverse=True)
+    
+    return render(
+        request,
+        'messages_list.html',
+        {
+            'obj': obj,
+            'conversations': conversation_list
+        }
+    )
+
+
+def conversation_view(request, user_id):
+    """View conversation with a specific user"""
+    token_data = request.session.get("data")
+    if not token_data:
+        return redirect("/")
+    
+    obj = Users.objects.get(user_id=token_data["user_id"])
+    other_user = get_object_or_404(Users, user_id=user_id)
+    
+    # Mark messages as read
+    Message.objects.filter(sender=other_user, receiver=obj, is_read=False).update(is_read=True)
+    
+    # Get all messages between these two users
+    messages = Message.objects.filter(
+        Q(sender=obj, receiver=other_user) | Q(sender=other_user, receiver=obj)
+    ).order_by('created_at')
+    
+    # Handle POST request (sending new message)
+    if request.method == "POST":
+        message_text = request.POST.get("message", "").strip()
+        if message_text:
+            Message.objects.create(
+                sender=obj,
+                receiver=other_user,
+                message=message_text
+            )
+            return redirect(f'/contractor/messages/{user_id}/')
+    
+    return render(
+        request,
+        'conversation.html',
+        {
+            'obj': obj,
+            'other_user': other_user,
+            'messages': messages
         }
     )

@@ -239,7 +239,7 @@
                     <li class="nav-item"><a class="nav-link" href="/contractor">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/contractor/project_page1">Projects</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Workers</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contractor/messages">Messages</a></li>
                     <li class="nav-item"><a class="nav-link active"
                             href="/contractor/project_applications">Applications</a></li>
 
@@ -289,7 +289,7 @@
 
             {% for project in projects %}
                 {% for application in project.applications.all %}
-                <a href="#" class="list-group-item list-group-item-action application-row d-flex align-items-center">
+                <a href="/contractor/applicant/{{ application.id }}/" class="list-group-item list-group-item-action application-row d-flex align-items-center">
                     <div class="user-avatar">
                         {{ application.applicant.user_full_name|slice:":2"|upper }}
                     </div>

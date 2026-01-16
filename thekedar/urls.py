@@ -11,5 +11,7 @@ urlpatterns = [
     path('projects_all/', views.thekedar_projects_all, name='projects_all'),
     path('apply_project/', views.apply_project, name='apply_project'),
     path('project_details/', views.project_details, name='project_detail'),
+    path('messages/', views.messages_list, name='messages_list'),
+    path('messages/<int:user_id>/', views.conversation_view, name='conversation'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

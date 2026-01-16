@@ -60,3 +60,30 @@ class ProjectAttachment(models.Model):
     project = models.ForeignKey(ContractorProject, on_delete=models.CASCADE, related_name="files")
     file = models.FileField(upload_to="project_files/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+
+class Message(models.Model):
+    """Message model for contractor and thekedar communication"""
+    sender = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name="sent_messages"
+    )
+    receiver = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name="received_messages"
+    )
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['sender', 'receiver']),
+            models.Index(fields=['receiver', 'is_read']),
+        ]
+    
+    def __str__(self):
+        return f"{self.sender.user_full_name} → {self.receiver.user_full_name}"

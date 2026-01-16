@@ -288,21 +288,31 @@
         <div class="scrollable-container list-group">
 
             {% for project in projects %}
-            <a href="#" class="list-group-item list-group-item-action application-row d-flex align-items-center">
-                <div class="user-avatar">RS</div>
-                <div class="flex-grow-1">
-                    <div class="d-flex justify-content-between align-items-center w-100">
-                        <h5 class="mb-1 fw-bold">{{project.user.user_username}}</h5>
-                        <small class="text-muted">
-                            {{ project.applications__applicant.applied_at|naturaltime }}
-                        </small>
+                {% for application in project.applications.all %}
+                <a href="#" class="list-group-item list-group-item-action application-row d-flex align-items-center">
+                    <div class="user-avatar">
+                        {{ application.applicant.user_full_name|slice:":2"|upper }}
                     </div>
-                    <p class="mb-1 text-primary"><i class="bi bi-building"></i> {{ project.project_title }}</p>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center w-100">
+                            <h5 class="mb-1 fw-bold">{{ application.applicant.user_full_name }}</h5>
+                            <small class="text-muted">
+                                {{ application.applied_at|naturaltime }}
+                            </small>
+                        </div>
+                        <p class="mb-1 text-primary"><i class="bi bi-building"></i> {{ project.project_title }}</p>
+                    </div>
+                    <div class="ms-3 badge-container">
+                        <span class="badge bg-success rounded-pill px-3 py-2">{{ application.experience_years }} yrs Exp</span>
+                    </div>
+                </a>
+                {% empty %}
+                <!-- No applications for this project -->
+                {% endfor %}
+            {% empty %}
+                <div class="text-center py-5">
+                    <p class="text-muted">No applications found for your projects.</p>
                 </div>
-                <div class="ms-3 badge-container">
-                    <span class="badge bg-success rounded-pill px-3 py-2">5 yrs Exp</span>
-                </div>
-            </a>
             {% endfor %}
             <a href="#" class="list-group-item list-group-item-action application-row d-flex align-items-center">
                 <div class="user-avatar" style="background:#fecaca; color:#b91c1c;">AV</div>
